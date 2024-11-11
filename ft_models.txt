@@ -1,8 +1,2 @@
-vgg19_drop
-resnet50_drop
-convnext_b_drop
-efficientnetv2_m_drop
 vit_b_16_drop
 swin_b_drop
-beit_b_16_drop
-deit_b_16_drop
