@@ -1,0 +1,143 @@
+('ijzer', 'ontwerper: Coninck, De'), 2, 1.3%
+('faience', 'toegeschreven aan plateelbakkerij: De Roos|toegeschreven aan plateelbakkerij: De Witte Starre| eigenaar plateelbakkerij: Hofdijck, Dammas'), 2, 1.3%
+('ivoor', ':'), 2, 1.3%
+('eikenhout', ': anoniem'), 2, 1.3%
+('ijzer', 'geweermaker: Penterman, Barend'), 2, 1.3%
+('fotopapier', 'toegeschreven aan fotograaf: Owen, Hugh'), 2, 1.3%
+('Oosters papier', 'tekenaar: Rembrandt Harmensz. van Rijn| naar schilderij van: anoniem'), 2, 1.3%
+('papier', 'vermeld op object prentmaker: Geilkercken, Nicolaes van'), 1, 0.7%
+('papier', 'vermeld op object prentmaker: Fokke, Jan|vermeld op object uitgever: Klippink, David'), 1, 0.7%
+('papier', 'prentmaker: Houbraken, Jacob| naar schilderij van: Ketel, Cornelis'), 1, 0.7%
+('papier', 'vermeld op object prentmaker: Hussem, Dirk'), 1, 0.7%
+('papier', 'prentmaker: Tanjé, Pieter| naar tekening van: Angeles, des'), 1, 0.7%
+('papier', 'vermeld op object prentmaker: Coster, David'), 1, 0.7%
+('papier', 'prentmaker: Raimondi, Marcantonio| naar ontwerp van: Raphael| naar ontwerp van: Penni, Giovanni Francesco| naar ontwerp van: anoniem'), 1, 0.7%
+('papier', 'prentmaker: Dolendo, Zacharias|vermeld op object naar ontwerp van: Gheyn, Jacob de (II)|vermeld op object uitgever: Gheyn, Jacob de (II)|vermeld op object schrijver: Groot, Hugo de'), 1, 0.7%
+('papier', 'vermeld op object prentmaker: Galle, Cornelis (I)|vermeld op object naar ontwerp van: Rubens, Peter Paul|vermeld op object uitgever: Hendricx, Gillis|vermeld op object opgedragen aan: Hamme, Willem van|vermeld op object opgedragen door: Neyt, Herman de|vermeld op object verlener van privilege: onbekend'), 1, 0.7%
+('papier', 'vermeld op object prentmaker: Sadeler, Johann (I)| naar ontwerp van: Cleve, Marten van (I)| uitgever: Visscher, Claes Jansz. (II)'), 1, 0.7%
+('geprepareerd papier', 'tekenaar: Bramer, Leonaert'), 1, 0.7%
+('glas (materiaal)', 'glasgraveur: anoniem| glasblazer: anoniem'), 1, 0.7%
+('porselein', 'porseleinfabriek: Meissener Porzellan Manufaktur|atelier van porseleinschilder: Seuter, Familie'), 1, 0.7%
+('zilver', 'zilversmid: Voet 106'), 1, 0.7%
+('porselein', 'porseleinfabriek: Weesper porseleinfabriek|toegeschreven aan ontwerper: Gauron, Nicolas-Joseph'), 1, 0.7%
+('Japans papier', 'prentmaker: Tani Seiko'), 1, 0.7%
+('porselein', 'porseleinfabriek: Den Haag, Porseleinfabriek'), 1, 0.7%
+('porselein', 'porseleinfabriek: Meissener Porzellan Manufaktur|toegeschreven aan porseleinschilder: Seuter, Abraham'), 1, 0.7%
+('brons', 'beeldhouwer: Moderno'), 1, 0.7%
+('Japans papier', 'naar ontwerp van: Shunzan, Katsukawa| prentmaker: Toen Nakade'), 1, 0.7%
+('ijzer', 'modelmaker: Whitworth'), 1, 0.7%
+('porselein', ': | :'), 1, 0.7%
+('brons', 'beeldhouwer: Gardet, George'), 1, 0.7%
+('glas (materiaal)', 'glasblazer: anoniem| glasgraveur: Castro, Daniël H. de'), 1, 0.7%
+('faience', 'toegeschreven aan tegelbakker: Kloet, Familie Van der'), 1, 0.7%
+('eikenhout', 'beeldhouwer: Douvermann, Hendrick'), 1, 0.7%
+('ivoor', 'schilder: anoniem|verworpen toeschrijving schilder: Nilson, Johann Esaias'), 1, 0.7%
+('zilver', ': Luder, Jan'), 1, 0.7%
+('porselein', 'mogelijk porseleinfabriek: M.O.L.'), 1, 0.7%
+('zilver', 'mogelijk edelsmid: Labberton, J.'), 1, 0.7%
+('zilver', ': Lutma, Johannes (II)'), 1, 0.7%
+('zilver', 'toegeschreven aan zilversmid: Hoyer, Nicolaas'), 1, 0.7%
+('faience', 'toegeschreven aan plateelbakkerij: De Metalen Pot'), 1, 0.7%
+('zilver', 'zilversmid: Strant, Daniël van'), 1, 0.7%
+('geprepareerd papier', 'tekenaar: Gheyn, Jacob de (II)'), 1, 0.7%
+('faience', 'fabrikant: Kerkhoff, Johan van'), 1, 0.7%
+('zilver', 'toegeschreven aan zilversmid: Wolffsen, Bernt'), 1, 0.7%
+('faience', 'plateelbakkerij: Het Jonge Moriaenshoofd'), 1, 0.7%
+('zilver', 'zilversmid: Ernens, W.N.'), 1, 0.7%
+('zilver', 'zilversmid: Stapele, François van'), 1, 0.7%
+('brons', 'toegeschreven aan modelleur: Tetrode, Willem Danielsz. van|toegeschreven aan gieter: Tetrode, Willem Danielsz. van|toegeschreven aan gieter: Tetrode, Willem Danielsz. van'), 1, 0.7%
+('glas (materiaal)', 'schilder: anoniem'), 1, 0.7%
+('zilver', ': Kettler, Engelbert'), 1, 0.7%
+('faience', 'mogelijk plateelbakkerij: De Metalen Pot|mogelijk eigenaar plateelbakkerij: Eenhoorn, Lambertus van|mogelijk plateelbakkerij: De Dobbelde Schenckan|mogelijk eigenaar plateelbakkerij: Victorsz., Louwys'), 1, 0.7%
+('geprepareerd papier', 'tekenaar: Coets, Herman'), 1, 0.7%
+('porselein', ': Degault, J.M.'), 1, 0.7%
+('brons', 'beeldhouwer: Vries, Adriaen de'), 1, 0.7%
+('faience', 'plateelbakkerij: De Witte Starre| eigenaar plateelbakkerij: Kiel, Albertus'), 1, 0.7%
+('faience', 'plateelbakkerij: De drie posteleyne Astonne'), 1, 0.7%
+('hout', 'fabriek: Koninklijke Fabriek voor Stoom- en andere Werktuigen'), 1, 0.7%
+('porselein', 'porseleinschilder: Rozenburg, N.V. Haagsche Plateelfabriek| : Amphora, Tegel- en Fayencefabriek'), 1, 0.7%
+('glas (materiaal)', 'glasblazer: anoniem|omgeving van glasgraveur: Mooleyser, Willem'), 1, 0.7%
+('Oosters papier', 'naar prent van: Rembrandt Harmensz. van Rijn| prentmaker: Claussin, Ignace Joseph de'), 1, 0.7%
+('perkament', 'mogelijk tekenaar: Molijn, Pieter de'), 1, 0.7%
+('porselein', 'porseleinfabriek: Meissener Porzellan Manufaktur|manier van porseleinschilder: Stadler, Johann Ehrenfried'), 1, 0.7%
+('glas (materiaal)', 'glasblazer: anoniem| glasgraveur: anoniem| naar prent van: Matham, Jacob'), 1, 0.7%
+('faience', 'mogelijk plateelbakkerij: Blankenburg| plateelschilder: anoniem'), 1, 0.7%
+('Japans papier', 'naar ontwerp van: Sôri, Hishikawa'), 1, 0.7%
+('geprepareerd papier', 'tekenaar: Marcus, Jacob Ernst'), 1, 0.7%
+('Oosters papier', 'tekenaar: Bik, Adrianus Johannes'), 1, 0.7%
+('brons', nan), 1, 0.7%
+('brons', ': Dassier, Jean| : Dassier, Antoine'), 1, 0.7%
+('porselein', 'porseleinfabriek: Frankenthal'), 1, 0.7%
+('eikenhout', 'omgeving van beeldhouwer: Meester van Koudewater'), 1, 0.7%
+('ivoor', 'schilder: Hari, Johannes (I)|kopie naar schilder: Cels, Cornelis'), 1, 0.7%
+('hout', 'ontwerper: Martin, F.| modelmaker: Bruijn, G. de'), 1, 0.7%
+('Japans papier', 'naar ontwerp van: Shuraku'), 1, 0.7%
+('eikenhout', 'ontwerper: Hart, Abraham van der'), 1, 0.7%
+('hout', 'modelmaker: Bentam, Charles'), 1, 0.7%
+('Japans papier', 'naar ontwerp van: Shinsai, Ryuryukyo'), 1, 0.7%
+('Japans papier', 'toegeschreven aan prentmaker: Kunisada (I), Utagawa'), 1, 0.7%
+('eikenhout', 'beeldsnijder: Wesel, Adriaen van'), 1, 0.7%
+('brons', 'toegeschreven aan beeldhouwer: Rustici, Giovanni Francesco|toegeschreven aan beeldhouwer: Rustici, Giovanni Francesco|verworpen toeschrijving beeldhouwer: anoniem'), 1, 0.7%
+('brons', 'kopie naar medailleur: Muller, Wouter'), 1, 0.7%
+('geprepareerd papier', 'vermeld op object prentmaker: Coclers, Louis Bernard|vermeld op object naar schilderij van: Ostade, Adriaen van'), 1, 0.7%
+('perkament', 'tekenaar: Slingelandt, Pieter Cornelisz. van'), 1, 0.7%
+('perkament', 'tekenaar: Dujardin, Karel'), 1, 0.7%
+('perkament', 'vermeld op object prentmaker: Galle, Cornelis (II)|vermeld op object prentmaker: Galle, Cornelis (III)|vermeld op object uitgever: Bout, Cornelis de'), 1, 0.7%
+('Oosters papier', 'vermeld op object prentmaker: Rembrandt Harmensz. van Rijn| naar eigen ontwerp van: Rembrandt Harmensz. van Rijn| prentmaker: Baillie, William'), 1, 0.7%
+('glas (materiaal)', 'schilder: Forberger, August|manier van schilder: Forberger, August'), 1, 0.7%
+('ivoor', 'schilder: Boze, Joseph'), 1, 0.7%
+('geprepareerd papier', 'prentmaker: Segers, Hercules| naar eigen ontwerp van: Segers, Hercules'), 1, 0.7%
+('hout', 'vervaardiger: William Armstrong &amp; Co.'), 1, 0.7%
+('Japans papier', 'prentmaker: Settan, Hasegawa'), 1, 0.7%
+('ijzer', 'geweermaker: Tenckinck, Egbert'), 1, 0.7%
+('glas (materiaal)', 'glasgraveur: Simon, Jean Baptiste| fabriek: Baccarat'), 1, 0.7%
+('Japans papier', 'naar ontwerp van: Shigenobu (II), Yanagawa'), 1, 0.7%
+('perkament', 'tekenaar: Rottermondt, Pieter'), 1, 0.7%
+('geprepareerd papier', 'tekenaar: Cigoli'), 1, 0.7%
+('brons', 'beeldhouwer: Aspetti, Tiziano'), 1, 0.7%
+('Japans papier', 'vermeld op object prentmaker: Keisai'), 1, 0.7%
+('perkament', 'tekenaar: Goudt, Hendrick| naar prent van: Leyden, Lucas van'), 1, 0.7%
+('brons', 'bronsgieter: Compagnie des Bronzes| naar beeld van: Kessels, Matthijs'), 1, 0.7%
+('Japans papier', 'omgeving van naar ontwerp van: Shigemasa, Kitao'), 1, 0.7%
+('perkament', 'tekenaar: Tischbein, Johann Friedrich August'), 1, 0.7%
+('ivoor', ': anoniem| : anoniem'), 1, 0.7%
+('glas (materiaal)', 'mogelijk glasblazer: onbekend|mogelijk : onbekend|mogelijk : onbekend'), 1, 0.7%
+('geprepareerd papier', 'tekenaar: Garofalo, Benvenuto Tisi da'), 1, 0.7%
+('perkament', 'tekenaar: Delfos, Abraham| naar schilderij van: Wandelaar, Jan'), 1, 0.7%
+('geprepareerd papier', 'tekenaar: Morazzone, Pier Francesco'), 1, 0.7%
+('geprepareerd papier', 'tekenaar: Passeri, Giuseppe'), 1, 0.7%
+('perkament', 'tekenaar: Mieris, Willem van'), 1, 0.7%
+('perkament', 'tekenaar: anoniem| naar ontwerp van: anoniem'), 1, 0.7%
+('ijzer', 'geweermaker: Meesen, Peter'), 1, 0.7%
+('ivoor', 'schilder: anoniem|verworpen toeschrijving schilder: anoniem'), 1, 0.7%
+('glas (materiaal)', 'glasblazer: anoniem| glasblazer: anoniem| glasgraveur: Petit, Mathieu'), 1, 0.7%
+('eikenhout', 'beeldhouwer: anoniem| beeldhouwer: anoniem'), 1, 0.7%
+('glas (materiaal)', 'glasblazer: anoniem| glasblazer: anoniem| glasgraveur: Sang, Simon Jacob'), 1, 0.7%
+('hout', ': Nederlandsche Stoomboot Maatschappij Feijenoord'), 1, 0.7%
+('hout', 'vervaardiger: anoniem'), 1, 0.7%
+('hout', 'beeldhouwer: anoniem'), 1, 0.7%
+('eikenhout', 'beeldsnijder: anoniem'), 1, 0.7%
+('ivoor', 'schilder: Wolters-van Pee, Henriëtte'), 1, 0.7%
+('eikenhout', 'beeldhouwer: Meester van het retabel van Hakendover'), 1, 0.7%
+('eikenhout', 'beeldsnijder: Schayck, Jan Eerstensz. van|verworpen toeschrijving beeldsnijder: Schayck, Jan Eerstensz. van|verworpen toeschrijving beeldsnijder: Wesel, Adriaen van'), 1, 0.7%
+('ivoor', ': anoniem'), 1, 0.7%
+('ivoor', 'toegeschreven aan schilder: Lesage, Pieter|verworpen toeschrijving schilder: Wilhelmina van Pruisen (1751-1820)'), 1, 0.7%
+('ijzer', 'ontwerper: Frogatt'), 1, 0.7%
+('fotopapier', 'toegeschreven aan fotograaf: Tripe, Linnaeus'), 1, 0.7%
+('hout', 'houtsnijder: Sogyoku'), 1, 0.7%
+('ijzer', 'geweermaker: Solingen, Jan van [I]| geweermaker: Solingen, Jacobus van'), 1, 0.7%
+('Oosters papier', 'prentmaker: Rembrandt Harmensz. van Rijn| naar eigen ontwerp van: Rembrandt Harmensz. van Rijn| prentmaker: Baillie, William'), 1, 0.7%
+('Oosters papier', 'prentmaker: Rembrandt Harmensz. van Rijn| prentmaker: Baillie, William'), 1, 0.7%
+('Oosters papier', 'verworpen toeschrijving naar eigen ontwerp van: Rembrandt Harmensz. van Rijn| naar prent van: anoniem| prentmaker: anoniem'), 1, 0.7%
+('hout', 'ontwerper: Glavimans, Pieter'), 1, 0.7%
+('hout', 'houtsnijder: Ransen'), 1, 0.7%
+('Oosters papier', 'prentmaker: Goya y Lucientes, Francisco José de| naar eigen ontwerp van: Goya y Lucientes, Francisco José de'), 1, 0.7%
+('ijzer', ': Masanori'), 1, 0.7%
+('fotopapier', 'fotograaf: Neususs, F. (Floris)'), 1, 0.7%
+('Oosters papier', 'vermeld op object prentmaker: Verkolje, Nicolaas|vermeld op object prentmaker: Verkolje, Nicolaas|vermeld op object naar schilderij van: Breda, L. von|vermeld op object uitgever: Visscher, Nicolaes (I)|vermeld op object verlener van privilege: anoniem'), 1, 0.7%
+('fotopapier', 'vermeld op object fotograaf: Woodbury &amp; Page| fotograaf: Woodbury, Walter Bentley| fotograaf: Page, James'), 1, 0.7%
+('fotopapier', 'vermeld op object fotograaf: Hisgen &amp; Co., O.'), 1, 0.7%
+('fotopapier', 'vermeld op object fotograaf: Ponthus, Marie'), 1, 0.7%
+('fotopapier', 'vermeld op object fotograaf: Stewart, Doug'), 1, 0.7%
+('fotopapier', 'fotograaf: Toussaint, Dolf'), 1, 0.7%
+('fotopapier', 'vermeld op object fotograaf: Callahan, Harry'), 1, 0.7%
