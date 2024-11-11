@@ -11,6 +11,7 @@ def get_vit_b_16_problem(off_the_shelf: bool, dl, pretrained: bool = True):
     :dataloaders: allows user to specify custom dataset.\n
     :pretrained: states if it should load a model pretrained om ImageNet.\n
     """
+    print("retrieving model vit_b_16")
     model = models.vit_b_16(pretrained=pretrained)
 
     # Prepare for off the shelf learning if needed:

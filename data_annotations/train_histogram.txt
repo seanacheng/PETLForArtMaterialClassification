@@ -1,0 +1,15 @@
+papier, 80, 6.7%
+zilver, 80, 6.7%
+faience, 80, 6.7%
+porselein, 80, 6.7%
+hout, 80, 6.7%
+brons, 80, 6.7%
+glas (materiaal), 80, 6.7%
+perkament, 80, 6.7%
+geprepareerd papier, 80, 6.7%
+fotopapier, 80, 6.7%
+ijzer, 80, 6.7%
+Japans papier, 80, 6.7%
+ivoor, 80, 6.7%
+Oosters papier, 80, 6.7%
+eikenhout, 80, 6.7%
