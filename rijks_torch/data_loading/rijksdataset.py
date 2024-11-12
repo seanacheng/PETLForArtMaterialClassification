@@ -5,6 +5,8 @@ import os
 import tarfile
 import re
 import io
+from PIL import Image
+from torchvision.transforms import ToTensor
 
 class RijksDataset(Dataset):
     """A class that encapsulates the Rijksmuseum Challenge dataset."""
@@ -56,12 +58,14 @@ class RijksDataset(Dataset):
             if file_obj is None:
                 raise FileNotFoundError(f"The file '{img_path}' was not found in {self._img_dir}.")
             
-            img = read_image(
-                path = io.BytesIO(file_obj.read()),
-                mode = ImageReadMode.RGB
-            ).float() / 255
+            img = Image.open(io.BytesIO(file_obj.read())).convert("RGB")
+            img_tensor = ToTensor()(img)
+            # img = read_image(
+            #     path = io.BytesIO(file_obj.read()),
+            #     mode = ImageReadMode.RGB
+            # ).float() / 255
             
-        x = img
+        x = img_tensor
         if self._transform:
             x = self._transform(x)
         
