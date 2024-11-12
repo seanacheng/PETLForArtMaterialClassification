@@ -4,6 +4,7 @@ import pandas as pd
 import os
 import tarfile
 import re
+import io
 
 class RijksDataset(Dataset):
     """A class that encapsulates the Rijksmuseum Challenge dataset."""
@@ -56,7 +57,7 @@ class RijksDataset(Dataset):
                 raise FileNotFoundError(f"The file '{img_path}' was not found in {self._img_dir}.")
             
             img = read_image(
-                path = file_obj,
+                path = io.BytesIO(file_obj.read()),
                 mode = ImageReadMode.RGB
             ).float() / 255
             
