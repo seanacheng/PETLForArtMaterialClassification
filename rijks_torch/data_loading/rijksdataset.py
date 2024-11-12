@@ -21,9 +21,6 @@ class RijksDataset(Dataset):
         self._img_dir = img_dir
         self._transform = transform
         self._target_transform = target_transform
-
-        # Better to check now than to find out while training:
-        self.subdir = re.search(r'all-(.+)\.csv', csv_file).group(1) + "_jpg"
     
     def _processTable(csv_file, materials):
         """
@@ -47,7 +44,7 @@ class RijksDataset(Dataset):
     def __getitem__(self, idx):
         """Get x (image) and y (material index into materials list) at idx"""
         x = read_image(
-            path = os.path.join(self._img_dir, self.subdir, self._df.loc[idx, "jpg"]),
+            path = os.path.join(self._img_dir, self._df.loc[idx, "jpg"]),
             mode = ImageReadMode.RGB
         ).float() / 255
         if self._transform:

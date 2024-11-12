@@ -27,14 +27,9 @@ def main():
 
     experiment_name = sys.argv[1]
     model_name = sys.argv[2]
-    dataset_files = sys.argv[3]
-    dataset_jpg_dir = sys.argv[4]
 
     # Creating the dataloaders from given arguments:
     dataloader = RijksDataloaders(
-        ds_name=dataset_files,
-        hist_path=dataset_files + "-hist.csv",
-        img_dir=dataset_jpg_dir,
         transforms={"rest": defs.buildTransform(imnet_norm=True),
                 "train": defs.buildTransform(imnet_norm=True, extratransforms = [
                     transforms.RandomRotation(10),
