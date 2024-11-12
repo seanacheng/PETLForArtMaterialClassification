@@ -57,4 +57,4 @@ class RijksDataloaders:
         # Creating the dataset and dataloader:
         ds = RijksDataset(f"{info['ds_name']}-{which}.csv",
                 info['materials'], info['img_dir'], transform)
-        return DataLoader(ds, batch_size=info["batch_size"], shuffle=True, num_workers=os.cpu_count())
+        return DataLoader(ds, batch_size=info["batch_size"], shuffle=True, num_workers=0) # num_workers=os.cpu_count()
