@@ -2,11 +2,7 @@ from torch.utils.data import Dataset
 from torchvision.io import read_image, ImageReadMode
 import pandas as pd
 import os
-import tarfile
 import re
-import io
-from PIL import Image
-from torchvision.transforms import ToTensor
 
 class RijksDataset(Dataset):
     """A class that encapsulates the Rijksmuseum Challenge dataset."""
@@ -50,22 +46,10 @@ class RijksDataset(Dataset):
     
     def __getitem__(self, idx):
         """Get x (image) and y (material index into materials list) at idx"""
-        
-        with tarfile.open(self._img_dir, 'r') as tar:
-            # Extract the file object for the specified file within the tar
-            img_path = os.path.join(self.subdir, self._df.loc[idx, "jpg"])
-            file_obj = tar.extractfile(img_path)
-            if file_obj is None:
-                raise FileNotFoundError(f"The file '{img_path}' was not found in {self._img_dir}.")
-            
-            img = Image.open(io.BytesIO(file_obj.read())).convert("RGB")
-            img_tensor = ToTensor()(img)
-            # img = read_image(
-            #     path = io.BytesIO(file_obj.read()),
-            #     mode = ImageReadMode.RGB
-            # ).float() / 255
-            
-        x = img_tensor
+        x = read_image(
+            path = os.path.join(self._img_dir, self.subdir, self._df.loc[idx, "jpg"]),
+            mode = ImageReadMode.RGB
+        ).float() / 255
         if self._transform:
             x = self._transform(x)
         

@@ -1,9 +1,9 @@
 from .defaults import freezeLayers
 from torch import nn
 from torchvision import models
-import timm
+from torchvision.models.vision_transformer import *
 
-def get_vit_b_16_problem(off_the_shelf: bool, dl, pretrained: bool = True):
+def get_vit_b_16_problem(off_the_shelf: bool, dl):
     """
     Returns the whole problem statement for training vit_b_16 on the Rijksdataset.
     In other words: a pre-trained model (with the head replaced), and the dataloaders.\n
@@ -12,7 +12,7 @@ def get_vit_b_16_problem(off_the_shelf: bool, dl, pretrained: bool = True):
     :pretrained: states if it should load a model pretrained om ImageNet.\n
     """
     print("retrieving model vit_b_16")
-    model = models.vit_b_16(pretrained=pretrained)
+    model = models.vit_b_16(weights=ViT_B_16_Weights.IMAGENET1K_V1)
 
     # Prepare for off the shelf learning if needed:
     freezeLayers(model, off_the_shelf)
@@ -23,9 +23,9 @@ def get_vit_b_16_problem(off_the_shelf: bool, dl, pretrained: bool = True):
     return model, dl
 
 
-def get_vit_b_16_drop_problem(off_the_shelf: bool, dl, pretrained: bool = True):
+def get_vit_b_16_drop_problem(off_the_shelf: bool, dl):
     """ Same but with a dropout layer. This version is used for fine tuning """
-    model, dl = get_vit_b_16_problem(off_the_shelf, dl, pretrained)
+    model, dl = get_vit_b_16_problem(off_the_shelf, dl)
     model.heads.head = nn.Sequential(
         nn.Dropout(p=0.2),
         nn.Linear(768, len(dl.materials))
