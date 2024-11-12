@@ -12,8 +12,7 @@ class RijksDataloaders:
     Encapsulates/groups dataloaders for the training, validation, and testing set
     """
 
-    def __init__(self, ds_name: str, hist_path: str, img_dir: str,
-                    transforms: dict, batch_size: int):
+    def __init__(self, transforms: dict, batch_size: int):
         """
         ## Constructor
         dsName is a path to the dataset such that f'{dsName}-train.csv', f'{dsName}-val.csv',
@@ -27,15 +26,15 @@ class RijksDataloaders:
         If a key 'train' and 'rest' are defined, 'train' is applied for training, and 'rest' for
         testing and validating.\n
         """
-        
+        # where the images are in the HPC
+        self.img_dir = '/cluster/tufts/cs152l3dclass/shared/rijksdata'
         # Get a list of possible materials:
-        self.materials = pd.read_csv(hist_path)["material"].to_list()
+        self.materials = pd.read_csv('data_annotations/all-hist.csv')["material"].to_list()
 
         # Stuff needed to make all datasets:
         info = {
-            "ds_name": ds_name,
             "materials": self.materials,
-            "img_dir": img_dir,
+            "img_dir": self.img_dir,
             "transforms": transforms,
             "batch_size": batch_size
         }
@@ -53,8 +52,8 @@ class RijksDataloaders:
         key = "train" if which == "train" else "rest"
         t = info["transforms"]
         transform = t[key] if key in t else list(t.values())[0]
+        jpg_dir = os.path.join(info['img_dir'], f"{which}_jpg")
         
         # Creating the dataset and dataloader:
-        ds = RijksDataset(f"{info['ds_name']}-{which}.csv",
-                info['materials'], info['img_dir'], transform)
-        return DataLoader(ds, batch_size=info["batch_size"], shuffle=True, num_workers=os.cpu_count())
+        ds = RijksDataset(f"data_annotations/all-{which}.csv", info['materials'], jpg_dir, transform)
+        return DataLoader(ds, batch_size=info["batch_size"], shuffle=True, num_workers=0) # num_workers=os.cpu_count()

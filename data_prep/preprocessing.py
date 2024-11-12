@@ -116,9 +116,9 @@ full_combo_hist = createComboHist(full_df)
 
 def splitData():
     # all: non-overlapping creators
-    # train set: equal number of instances for all classes
-    # val set: 1 instance of each class
-    # test set: random sample
+    # train set: 80 instances of each classes
+    # val set: 10 instances of each class
+    # test set: max 60 instances of each class
     train_list = []
     train_material_instances = 80
     train_material_counter = {key: 0 for key in materials}
@@ -175,8 +175,8 @@ def splitData():
         if train_material_counter[material] < train_material_instances:
             print(f"incomplete {material} training set of size {train_material_counter[material]}!!!")
 
-    train_df = pd.DataFrame(train_list, columns=['filename', 'material'])
-    train_df.to_csv("data_annotations/train_df.csv", index=False)
+    train_df = pd.DataFrame(train_list, columns=['jpg', 'material'])
+    train_df.to_csv("data_annotations/all-train.csv", index=False)
     train_mat_hist = [[material, train_material_counter[material]] for material in train_material_counter]
     train_mat_hist.sort(key = lambda x: x[1], reverse = True)
     printHist(train_mat_hist, 'data_annotations/train_histogram.txt')
@@ -184,8 +184,8 @@ def splitData():
     train_combo_hist.sort(key = lambda x: x[1], reverse = True)
     printHist(train_combo_hist, 'data_annotations/train_combo_histogram.txt')
 
-    val_df = pd.DataFrame(val_list, columns=['filename', 'material'])
-    val_df.to_csv("data_annotations/val_df.csv", index=False)
+    val_df = pd.DataFrame(val_list, columns=['jpg', 'material'])
+    val_df.to_csv("data_annotations/all-val.csv", index=False)
     val_mat_hist = [[material, val_material_counter[material]] for material in val_material_counter]
     val_mat_hist.sort(key = lambda x: x[1], reverse = True)
     printHist(val_mat_hist, 'data_annotations/val_histogram.txt')
@@ -193,8 +193,8 @@ def splitData():
     val_combo_hist.sort(key = lambda x: x[1], reverse = True)
     printHist(val_combo_hist, 'data_annotations/val_combo_histogram.txt')
 
-    test_df = pd.DataFrame(test_list, columns=['filename', 'material'])
-    test_df.to_csv("data_annotations/test_df.csv", index=False)
+    test_df = pd.DataFrame(test_list, columns=['jpg', 'material'])
+    test_df.to_csv("data_annotations/all-test.csv", index=False)
     test_mat_hist = [[material, test_material_counter[material]] for material in test_material_counter]
     test_mat_hist.sort(key = lambda x: x[1], reverse = True)
     printHist(test_mat_hist, 'data_annotations/test_histogram.txt')
@@ -204,9 +204,9 @@ def splitData():
 
     return train_df, val_df, test_df
 
-train_file = 'data_annotations/train_df.csv'
-val_file = 'data_annotations/val_df.csv'
-test_file = 'data_annotations/test_df.csv'
+train_file = 'data_annotations/all-train.csv'
+val_file = 'data_annotations/all-val.csv'
+test_file = 'data_annotations/all-test.csv'
 if os.path.exists(train_file) and os.path.exists(val_file) and os.path.exists(test_file):
     train_df = pd.read_csv(train_file)
     val_df = pd.read_csv(val_file)
@@ -214,13 +214,16 @@ if os.path.exists(train_file) and os.path.exists(val_file) and os.path.exists(te
 else:
     train_df, val_df, test_df = splitData()
 
-# merged_df = pd.merge(train_df, val_df, how='inner')
-# overlap_df = pd.merge(merged_df, test_df, how='inner')
-# if not overlap_df.empty:
-#     print("There are overlapping rows.")
-#     print(overlap_df)
-# else:
-#     print("No overlapping rows found.")
+    merged_df = pd.merge(train_df, val_df, how='inner')
+    overlap_df = pd.merge(merged_df, test_df, how='inner')
+    if not overlap_df.empty:
+        print("There are overlapping rows.")
+        print(overlap_df)
+    else:
+        print("No overlapping rows found.")
+
+    all_df = createMaterialHist(overlap_df)
+    printHist(all_df, 'data_annotations/all-hist.csv')
 
 train_xmlPath = "C:/Users/seana/Homework/L3D/RijksData/train_xml/"
 train_jpgPath = "C:/Users/seana/Homework/L3D/RijksData/train_jpg/"
@@ -259,4 +262,4 @@ def moveSubsetFiles():
         dest_xml_path = os.path.join(test_xmlPath, xml_filename)
         shutil.move(src_xml_path, dest_xml_path)
 
-moveSubsetFiles()
+# moveSubsetFiles()

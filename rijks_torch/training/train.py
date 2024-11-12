@@ -1,7 +1,7 @@
 import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
-from torch.cuda.amp import autocast, GradScaler
+from torch.amp import autocast, GradScaler
 from ..data_loading import RijksDataloaders
 
 from time import time
@@ -75,14 +75,14 @@ def train_loop(model: nn.Module, dataloader: DataLoader, lossfunc, optimizer, de
     model.train()
 
     # Scalar for mixed precision computations:
-    scalar = GradScaler()
+    scalar = GradScaler('cuda')
 
     for batchnum, (x, y) in enumerate(dataloader):
         x = x.to(device)
         y = y.to(device)
 
         # Forward pass:
-        with autocast(): # Taking advantage of mixed precision speedup (on v100)
+        with autocast('cuda'): # Taking advantage of mixed precision speedup (on v100)
             pred = model(x)
             loss = lossfunc(pred, y)
 

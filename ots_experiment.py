@@ -25,20 +25,15 @@ def main():
 
     experiment_name = sys.argv[1]
     model_name = sys.argv[2]
-    dataset_files = sys.argv[3]
-    dataset_jpg_dir = sys.argv[4]
 
     # Creating the dataloaders from given arguments:
-    datloader = RijksDataloaders(
-        ds_name=dataset_files,
-        hist_path=dataset_files + "-hist.csv",
-        img_dir=dataset_jpg_dir,
+    dataloader = RijksDataloaders(
         transforms={"all": defs.buildTransform(imnet_norm=True)},
         batch_size=256
     )
 
     # Get the model tailored to specification. Using getattr because function from cli args
-    model, dl = getattr(probs, f"get_{model_name}_problem")(off_the_shelf=True, dl=datloader)
+    model, dl = getattr(probs, f"get_{model_name}_problem")(off_the_shelf=True, dl=dataloader)
 
     loss = nn.CrossEntropyLoss()
     optimizer = optim.Adam([param for param in model.parameters() if param.requires_grad == True])
