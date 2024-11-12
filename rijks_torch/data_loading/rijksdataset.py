@@ -56,7 +56,7 @@ class RijksDataset(Dataset):
                 raise FileNotFoundError(f"The file '{img_path}' was not found in {self._img_dir}.")
             
             img = read_image(
-                path = os.path.join(self._img_dir, self._df.loc[idx, "jpg"]),
+                path = file_obj,
                 mode = ImageReadMode.RGB
             ).float() / 255
             
