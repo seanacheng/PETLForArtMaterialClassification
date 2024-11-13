@@ -21,4 +21,4 @@ infile=ots_models.txt
 model=$(sed "${SLURM_ARRAY_TASK_ID}q;d" $infile)
 
 source /data/$USER/bachproj/bin/activate
-python ots_experiment.py $1_$model $model /local/tmp/dataset/fullsize /local/tmp/dataset
+python lp_experiment.py $1_$model $model /local/tmp/dataset/fullsize /local/tmp/dataset

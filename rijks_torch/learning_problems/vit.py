@@ -1,33 +1,27 @@
 from .defaults import freezeLayers
+import torch
 from torch import nn
 from torchvision import models
 from torchvision.models.vision_transformer import *
 
-def get_vit_b_16_problem(off_the_shelf: bool, dl):
-    """
-    Returns the whole problem statement for training vit_b_16 on the Rijksdataset.
-    In other words: a pre-trained model (with the head replaced), and the dataloaders.\n
-    :off_the_shelf: says if it should freeze all but the new head for learning.\n
-    :dataloaders: allows user to specify custom dataset.\n
-    :pretrained: states if it should load a model pretrained om ImageNet.\n
-    """
-    print("retrieving model vit_b_16")
-    model = models.vit_b_16(weights=ViT_B_16_Weights.IMAGENET1K_V1)
+class ViTModel(torch.nn.Module):
 
-    # Prepare for off the shelf learning if needed:
-    freezeLayers(model, off_the_shelf)
+    def __init__(self, method, seed: int = 42, n_target_classes: int = 15):
+        super().__init__()
+
+        self.model = None
+        self.model = models.vit_b_16(weights=ViT_B_16_Weights.IMAGENET1K_V1)
+
+        if method in ["lp", "ft", "st"]:
+            freezeLayers(self.model, method, n_target_classes)
+        
+        torch.manual_seed(int(seed))
+        # Replace head with one that fits the task
+        self.model.heads.head = nn.Linear(768, n_target_classes)
     
-    # Replace head with one that fits the task
-    model.heads.head = nn.Linear(768, len(dl.materials))
 
-    return model, dl
-
-
-def get_vit_b_16_drop_problem(off_the_shelf: bool, dl):
-    """ Same but with a dropout layer. This version is used for fine tuning """
-    model, dl = get_vit_b_16_problem(off_the_shelf, dl)
-    model.heads.head = nn.Sequential(
-        nn.Dropout(p=0.2),
-        nn.Linear(768, len(dl.materials))
-    )
-    return model, dl
+    def forward(self,x):
+        return self.model(x)
+    
+    def predict_proba(self, x):
+        return torch.nn.functional.softmax(self.forward(x), dim=1)
