@@ -6,22 +6,9 @@ import numpy as np
 import tqdm
 from copy import deepcopy
 
-def train(model: nn.Module,
-          train_loader, val_loader,
-          lr, num_epochs, seed):
+def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, seed=12, l2pen=0.0):
     """
-    ## Function for training of a model
-
-    model should be all set, and adapted to the specified datasets in terms of architecture.\n
-    dataloaders is a class encapsulating the training, validating and testing sets.\n
-    lossfunc is the used loss function.\n
-    optimizer is the used optimizer.\n
-    max_epochs maximum number of epochs if no early stopping occured\n
-    early_stop if no new best is found after this many trials, training stops\n
-    scheduler dynamically changes the learning rate\n
-    name is the name of the experiment. Gets prepended to output filenames\n
-    ### Returns the model that scored best on the validation set!\n
-    ### Also saves validation statistics to {name}-validation.csv
+    Function for training a model
     """
     
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -50,22 +37,26 @@ def train(model: nn.Module,
     for epoch in progressbar:
         if epoch > 0:
             model.train()
-
+            tr_loss = 0.0  # aggregate total loss
+            tr_xent = 0.0  # aggregate cross-entropy
+            tr_err = 0     # count mistakes on train set
             pbar_info['batch_done'] = 0
             for batchnum, (x, y) in enumerate(train_loader):
                 optimizer.zero_grad()
 
                 # Forward pass:
                 logits = model(x.to(device))
-                loss_xent = nn.CrossEntropyLoss(logits, y.to(device), reduction='mean')
+                
+                xent_loss_func = nn.CrossEntropyLoss(reduction='mean')
+                loss_xent = xent_loss_func(logits, y.to(device))
 
                 loss_l2 = 0
-                for name, param in model.trainable_params.items():
-                    if 'weight' in name:
+                for param in model.parameters():
+                    if param.requires_grad:
                         loss_l2 += torch.sum(param ** 2)
 
                 # Backward pass:
-                loss = loss_xent / n_train * loss_l2
+                loss = loss_xent + l2pen / n_train * loss_l2
                 loss.backward()
                 optimizer.step()
 
@@ -91,7 +82,8 @@ def train(model: nn.Module,
             va_err = 0
             for x_val, y_val in val_loader:
                 logits = model(x_val.to(device))
-                va_xent += nn.CrossEntropyLoss(logits, y_val.to(device), reduction='sum').item()
+                xent_loss_func = nn.CrossEntropyLoss(reduction='sum')
+                va_xent += xent_loss_func(logits, y_val.to(device)).item()
 
                 va_err += sklearn.metrics.zero_one_loss(
                     logits.argmax(axis=1).detach().cpu().numpy(), y_val, normalize=False)

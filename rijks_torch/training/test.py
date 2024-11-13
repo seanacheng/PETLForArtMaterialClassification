@@ -1,20 +1,16 @@
 import torch
 from torch import nn
-import pandas as pd
-from ..data_loading import RijksDataloaders
 
 def test(model: nn.Module, test_loader):
     """
-    ### Tests the given model on dataloaders.test.
-    Saves the following data as csv-files:\n
-    \t(1) '{name}-test_predictions.csv' gives the full softmax prediction, as well as the correct output;\n
-    \t(2) '{name}-test_confusion.csv' gives the confusion matrix.\n
+    Function for testing a model
     """
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     model.to(device)
     model.eval()
 
+    correct = 0
     with torch.no_grad():
         for x, y in test_loader:
             logits = model(x.to(device))

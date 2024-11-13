@@ -12,10 +12,10 @@ def main():
     assert torch.cuda.is_available(), "There was no GPU :-("
 
     # Creating the dataloaders from given arguments:
-    train_loader, val_loader, test_loader = RijksDataloaders.make_data_loaders(batch_size=32, transform=defs.buildTransform(imnet_norm=True))
+    train_loader, val_loader, test_loader = RijksDataloaders.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
     # Get the model tailored to specification. Using getattr because function from cli args
-    model = ViTModel(method="ft")
+    model = ViTModel(method="lp")
 
     seed = 1
     lr = 0.01
