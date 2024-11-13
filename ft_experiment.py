@@ -1,12 +1,10 @@
-from sched import scheduler
-import sys
-from torch import nn, optim
-from torchvision import transforms
+
 import torch
-import rijks_torch.learning_problems as probs
+from rijks_torch.learning_problems import ViTModel, SwinModel
 import rijks_torch.learning_problems.defaults as defs
 from rijks_torch.data_loading.rijksdataloaders import RijksDataloaders
 from rijks_torch.training import train, test
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -25,31 +23,27 @@ def main():
     # If there is no gpu, we aren't actually going to run it..
     assert torch.cuda.is_available(), "There was no GPU :-("
 
-    experiment_name = sys.argv[1]
-    model_name = sys.argv[2]
-
     # Creating the dataloaders from given arguments:
-    dataloader = RijksDataloaders(
-        transforms={"rest": defs.buildTransform(imnet_norm=True),
-                "train": defs.buildTransform(imnet_norm=True, extratransforms = [
-                    transforms.RandomRotation(10),
-                    transforms.RandomHorizontalFlip()
-                ])},
-        batch_size=32
-    )
+    train_loader, val_loader, test_loader = RijksDataloaders.make_data_loaders(batch_size=32)
 
     # Get the model tailored to specification. Using getattr because function from cli args
-    model, dl = getattr(probs, f"get_{model_name}_problem")(off_the_shelf=False, dl=dataloader)
+    model = ViTModel(method="ft")
 
-    loss = nn.CrossEntropyLoss(label_smoothing=0.1)
-    optimizer = optim.Adam([param for param in model.parameters() if param.requires_grad == True], lr=1e-4)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=2, min_lr=5e-7)
-
+    seed = 1
+    lr = 0.01
+    epochs = 100
     # Training and validating (best model on val set returned):
-    model = train(model, dl, loss, optimizer, scheduler=scheduler, early_stop=10, name=experiment_name)
+    model, results = train(model, train_loader, val_loader, lr, epochs, seed)
 
     # Testing model that performed best on validation set:
-    test(model, dl, loss, name=experiment_name)
+    print(test(model, test_loader))
+
+    plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
+    plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
+
+    plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
+    plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
+    plt.legend();
 
 if __name__ == "__main__":
     main()

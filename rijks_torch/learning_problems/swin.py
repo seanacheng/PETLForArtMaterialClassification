@@ -1,72 +1,26 @@
 from .defaults import freezeLayers
+import torch
 from torch import nn
 import timm
 
-def get_swin_b_problem(off_the_shelf: bool, dl, pretrained: bool = True):
-    """
-    Returns the whole problem statement for training swin_b on the Rijksdataset.
-    In other words: a pre-trained model (with the head replaced), and the dataloaders.\n
-    :off_the_shelf: says if it should freeze all but the new head for learning.\n
-    :dataloaders: allows user to specify custom dataset.\n
-    :pretrained: states if it should load a model pretrained om ImageNet.\n
-    """
-    model = timm.create_model('swin_base_patch4_window7_224', pretrained=pretrained)
+class SwinModel(torch.nn.Module):
 
-    # Prepare for off the shelf learning if needed:
-    freezeLayers(model, off_the_shelf)
+    def __init__(self, method, seed: int = 42, n_target_classes: int = 15, pretrained=True):
+        super().__init__()
+
+        self.model = timm.create_model('swin_base_patch4_window7_224', pretrained=pretrained)
+
+        if method in ["lp", "ft", "st"]:
+            freezeLayers(self.model, method, n_target_classes)
+        
+        torch.manual_seed(int(seed))
+        # Replace head with one that fits the task
+        self.model.head = nn.Linear(self.model.head.in_features, n_target_classes)
     
-    # Replace head with one that fits the task
-    model.head = nn.Linear(1024, len(dl.materials))
 
-    return model, dl
-
-
-def get_swin_b_drop_problem(off_the_shelf: bool, dl, pretrained: bool = True):
-    """ Same but with a dropout layer. This version is used for fine tuning """
-    model, dl = get_swin_b_problem(off_the_shelf, dl, pretrained)
-    model.head = nn.Sequential(
-        nn.Dropout(p=0.2),
-        nn.Linear(1024, len(dl.materials))
-    )
-    return model, dl
-
-
-def get_swin_s_problem(off_the_shelf: bool, dl, pretrained: bool = True):
-    """
-    Returns the whole problem statement for training swin_s on the Rijksdataset.
-    In other words: a pre-trained model (with the head replaced), and the dataloaders.\n
-    :off_the_shelf: says if it should freeze all but the new head for learning.\n
-    :dataloaders: allows user to specify custom dataset.\n
-    :pretrained: states if it should load a model pretrained om ImageNet.\n
-    """
-    model = timm.create_model('swin_small_patch4_window7_224', pretrained=pretrained)
-
-    # Prepare for off the shelf learning if needed:
-    freezeLayers(model, off_the_shelf)
+    def forward(self, x):
+        return self.model(x)
     
-    # Replace head with one that fits the task
-    model.head = nn.Linear(768, len(dl.materials))
+    def predict_proba(self, x):
+        return torch.nn.functional.softmax(self.forward(x), dim=1)
 
-    return model, dl
-
-
-def get_swin_t_problem(off_the_shelf: bool, dl, pretrained: bool = True):
-    """
-    Returns the whole problem statement for training swin_t on the Rijksdataset.
-    In other words: a pre-trained model (with the head replaced), and the dataloaders.\n
-    :off_the_shelf: says if it should freeze all but the new head for learning.\n
-    :dataloaders: allows user to specify custom dataset.\n
-    :pretrained: states if it should load a model pretrained om ImageNet.\n
-    """
-    model = timm.create_model('swin_tiny_patch4_window7_224', pretrained=pretrained)
-
-    # Prepare for off the shelf learning if needed:
-    freezeLayers(model, off_the_shelf)
-    
-    # Replace head with one that fits the task
-    model.head = nn.Sequential(
-        nn.Dropout(p=0.2),
-        nn.Linear(768, len(dl.materials))
-    )
-
-    return model, dl
