@@ -13,7 +13,10 @@ def test(model: nn.Module, test_loader):
     correct = 0
     with torch.no_grad():
         for x, y in test_loader:
+
             logits = model(x.to(device))
             pred_y = torch.argmax(logits, dim=1)
+
             correct += torch.sum(pred_y == y.to(device)).item()
+            
     return correct / len(test_loader.dataset)

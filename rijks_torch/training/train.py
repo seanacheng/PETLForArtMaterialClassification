@@ -2,7 +2,6 @@ import torch
 from torch import nn, optim
 import sklearn.metrics
 import numpy as np
-
 import tqdm
 from copy import deepcopy
 
@@ -113,6 +112,7 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
         elif epoch - best_epoch >= early_stop_after_epochs:
             print("Stopped early.")
             break
+
     print(f"Finished after epoch {epoch}, best epoch={best_epoch}")
     print("best va_xent %.3f" % best_va_loss)
     print("best tr_err %.3f" % best_tr_err_rate)

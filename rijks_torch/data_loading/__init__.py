@@ -1,2 +1,2 @@
 from .rijksdataset import RijksDataset
-from .rijksdataloaders import RijksDataloaders
+from .rijksdataloader import RijksDataloader
