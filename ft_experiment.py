@@ -18,29 +18,46 @@ def main():
     # Get the model tailored to specification. Using getattr because function from cli args
     model = ViTModel(method="ft")
 
-    seed = 1
-    lr = 0.01
+    seeds = [17, 204, 596]
+    lrs = [0.001, 0.01, 0.1]
     l2pen = 0.1
     epochs = 100
-    model, results = train(model, train_loader, val_loader, lr, epochs, seed, l2pen)
-    
-    pd.DataFrame({
-        'total_loss': results['tr']['loss'],
-        'train_loss': results['tr']['xent'],
-        'train_err':  results['tr']['err'],
-        'val_loss':   results['va']['xent'],
-        'val_err':    results['va']['err']
-    }).to_csv(f'results/ViT_ft_results.csv')
+    df = pd.DataFrame(columns=['total_loss', 'train_loss', 'train_err', 'val_loss', 'val_err', 'epoch'])
 
-    # Testing model that performed best on validation set:
-    print(test(model, test_loader))
+    figures = []
+    fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(9,4))
+    for lr in lrs:
+        for seed in seeds:
+            model, results = train(model, train_loader, val_loader, lr, epochs, seed, l2pen)
+            # Testing model that performed best on validation set:
+            final_acc = test(model, test_loader) 
+            print(f"final accuracy: {final_acc}")
+            
+            temp_df = pd.DataFrame({
+                'total_loss': results['tr']['loss'],
+                'train_loss': results['tr']['xent'],
+                'train_err':  results['tr']['err'],
+                'val_loss':   results['va']['xent'],
+                'val_err':    results['va']['err'],
+                'epoch':      results['epochs']
+            })
 
-    plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
-    plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
+            ax.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
+            ax.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
 
-    plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
-    plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-    plt.legend()
+            ax.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
+            ax.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
+            ax.set_title(f'ViT FT test accuracy={final_acc}\nlr={lr}, seed={seed}')
+            ax.legend()
+            figures.append(fig)
+            fig.savefig(f'results/vit_ft_lr_{lr}_seed_{seed}.png')
+
+            df = pd.concat([df, temp_df], ignore_index=True)
+
+    df.to_csv(f'results/ViT_ft_results.csv')
+    for fig in figures:
+        fig.show()
+
 
 if __name__ == "__main__":
     main()
