@@ -25,7 +25,7 @@ def main():
     df = pd.DataFrame(columns=['total_loss', 'train_loss', 'train_err', 'val_loss', 'val_err', 'epoch'])
 
     figures = []
-    fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(9,4))
+    
     for lr in lrs:
         for seed in seeds:
             model, results = train(model, train_loader, val_loader, lr, epochs, seed, l2pen)
@@ -41,7 +41,7 @@ def main():
                 'val_err':    results['va']['err'],
                 'epoch':      results['epochs']
             })
-
+            fig, ax = plt.subplots(figsize=(9,4))
             ax.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
             ax.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
 
