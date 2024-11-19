@@ -18,14 +18,14 @@ def main():
     seeds = [17, 204]
     lrs = [0.01]
     seed = 1
-    lr = 0.01
+    l2pen = 0.1
     epochs = 100
 
     for lr in lrs:
         for seed in seeds:
             pretrained_model = ViTModel(method="lp")
             # Training and validating (best model on val set returned):
-            trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed)
+            trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
 
             # Testing model that performed best on validation set:
             final_acc = test(trained_model, test_loader) 
