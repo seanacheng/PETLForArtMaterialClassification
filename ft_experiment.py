@@ -52,7 +52,7 @@ def main():
 
                 ax.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
                 ax.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-                ax.set_title(f'ViT FT test accuracy={final_acc}\nlr={lr}, seed={seed}')
+                ax.set_title(f'{model} FT test accuracy={final_acc}\nlr={lr}, seed={seed}')
                 ax.legend()
                 figures.append(fig)
                 fig.savefig(f'results/{model}_ft_lr_{lr}_seed_{seed}.png')
