@@ -13,7 +13,7 @@ def main():
     assert torch.cuda.is_available(), "There was no GPU :-("
 
     # Creating the dataloaders from given arguments:
-    train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
+    train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=64, transform=defs.buildTransform(imnet_norm=True))
 
     seeds = [17, 204, 596]
     lrs = [0.001, 0.01, 0.1]
