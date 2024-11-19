@@ -82,10 +82,11 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
             for x_val, y_val in val_loader:
                 logits = model(x_val.to(device))
                 xent_loss_func = nn.CrossEntropyLoss(reduction='sum')
-                va_xent += xent_loss_func(logits, y_val.to(device)).item() / n_valid
+                va_xent += xent_loss_func(logits, y_val.to(device)).item()
 
                 va_err += sklearn.metrics.zero_one_loss(
                     logits.argmax(axis=1).detach().cpu().numpy(), y_val, normalize=False)
+            va_xent = va_xent / n_valid
             va_err_rate = va_err / n_valid
 
         # Update diagnostics and progress bar

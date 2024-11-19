@@ -44,7 +44,9 @@ def main():
                     'train_err':  results['tr']['err'],
                     'val_loss':   results['va']['xent'],
                     'val_err':    results['va']['err'],
-                    'epoch':      results['epochs']
+                    'epoch':      results['epochs'],
+                    'lr':         lr,
+                    'seed':       seed
                 })
                 fig, ax = plt.subplots(figsize=(9,4))
                 ax.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
@@ -59,7 +61,7 @@ def main():
 
                 df = pd.concat([df, temp_df], ignore_index=True)
 
-        df.to_csv(f'results/{model}_ft_results.csv')
+        df.to_csv(f'results/{model}_ft_lr_{lr}_seed_{seed}.csv')
 
     for fig in figures:
         fig.show()

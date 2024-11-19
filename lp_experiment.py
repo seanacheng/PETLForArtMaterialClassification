@@ -4,6 +4,7 @@ import rijks_torch.learning_problems.defaults as defs
 from rijks_torch.data_loading.rijksdataloader import RijksDataloader
 from rijks_torch.training import train, test
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 def main():
@@ -14,26 +15,40 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    # Get the model tailored to specification. Using getattr because function from cli args
-    model = ViTModel(method="lp")
-
+    seeds = [17, 204]
+    lrs = [0.01]
     seed = 1
     lr = 0.01
     epochs = 100
-    # Training and validating (best model on val set returned):
-    model, results = train(model, train_loader, val_loader, lr, epochs, seed)
 
-    # Testing model that performed best on validation set:
-    print(test(model, test_loader))
+    for lr in lrs:
+        for seed in seeds:
+            pretrained_model = ViTModel(method="lp")
+            # Training and validating (best model on val set returned):
+            trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed)
 
-    plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
-    plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
+            # Testing model that performed best on validation set:
+            final_acc = test(trained_model, test_loader) 
+            print(f"final accuracy: {final_acc}")
 
-    plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
-    plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-    plt.legend()
+            df = pd.DataFrame({
+                'total_loss': results['tr']['loss'],
+                'train_loss': results['tr']['xent'],
+                'train_err':  results['tr']['err'],
+                'val_loss':   results['va']['xent'],
+                'val_err':    results['va']['err'],
+                'epoch':      results['epochs']
+            })
 
-    model_swin = SwinModel("lp")
+            plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
+            plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
+
+            plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
+            plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
+            plt.title(f'ViT LP test accuracy={final_acc}\nlr={lr}, seed={seed}')
+            plt.legend()
+
+            df.to_csv(f'results/ViT_LP_lr_{lr}_seed_{seed}.csv')
 
 if __name__ == "__main__":
     main()
