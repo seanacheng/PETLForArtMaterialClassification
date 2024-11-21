@@ -1,7 +1,6 @@
 from torchvision import transforms
-from torch import nn
 
-def freezeLayers(model, method, n_target_classes):
+def freezeLayers(model, method):
     if method == "lp":
         # Freeze all layers except the final classification head
         for param in model.parameters():
@@ -18,12 +17,6 @@ def freezeLayers(model, method, n_target_classes):
         # Side-network tuning: freeze the main model and add a side network
         for param in model.parameters():
             param.requires_grad = False
-        # Example side network (you can customize this)
-        model.side_network = nn.Sequential(
-            nn.Linear(model.head.in_features, 512),
-            nn.ReLU(),
-            nn.Linear(512, n_target_classes)
-        )
         for param in model.side_network.parameters():
             param.requires_grad = True
 
