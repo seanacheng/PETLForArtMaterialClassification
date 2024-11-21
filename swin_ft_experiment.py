@@ -1,5 +1,5 @@
 import torch
-from rijks_torch.learning_problems import ViTModel
+from rijks_torch.learning_problems import SwinModel
 import rijks_torch.learning_problems.defaults as defs
 from rijks_torch.data_loading.rijksdataloader import RijksDataloader
 from rijks_torch.training import train, test
@@ -13,19 +13,19 @@ def main():
     assert torch.cuda.is_available(), "There was no GPU :-("
 
     # Creating the dataloaders from given arguments:
-    train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
+    train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=64, transform=defs.buildTransform(imnet_norm=True))
 
-    seeds = [17, 204]
-    lrs = [0.01]
+    seeds = [17, 204, 596]
+    lrs = [0.001, 0.01, 0.1]
     l2pen = 0.1
     epochs = 100
 
     for lr in lrs:
         for seed in seeds:
-            pretrained_model = ViTModel(method="lp")
+            pretrained_model = SwinModel(method="ft")
             # Training and validating (best model on val set returned):
             trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
-            torch.save(trained_model, f"results/best_ViT_LP_model.pth")
+            torch.save(trained_model, f"results/best_Swin_FT_model.pth")
 
             # Testing model that performed best on validation set:
             final_acc = test(trained_model, test_loader) 
@@ -45,10 +45,11 @@ def main():
 
             plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
             plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-            plt.title(f'ViT LP test accuracy={final_acc}\nlr={lr}, seed={seed}')
+            plt.title(f'Swin FT test accuracy={final_acc}\nlr={lr}, seed={seed}')
             plt.legend()
 
-            df.to_csv(f'results/ViT_LP_lr_{lr}_seed_{seed}.csv')
+            df.to_csv(f'results/Swin_FT_lr_{lr}_seed_{seed}.csv')
+
 
 if __name__ == "__main__":
     main()
