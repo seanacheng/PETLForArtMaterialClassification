@@ -48,7 +48,7 @@ def main():
             plt.title(f'Swin LP\nlr={lr}, seed={seed}')
             plt.legend()
 
-            df.to_csv(f'results/Swin_LP_lr_{lr}_seed_{seed}.csv')
+            df.to_csv(f'results/Swin_LP_lr_{str(lr)[2:]}_seed_{seed}.csv')
 
 if __name__ == "__main__":
     main()
