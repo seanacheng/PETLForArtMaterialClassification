@@ -109,6 +109,7 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
             best_tr_err_rate = tr_err_rate
             best_va_err_rate = va_err_rate
             best_model = deepcopy(model.state_dict())
+            # torch.save(best_model, f"best_model.pth")
         elif epoch - best_epoch >= early_stop_after_epochs:
             print("Stopped early.")
             break
@@ -120,6 +121,7 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
 
     # Return the best model found:
     # model.load_state_dict(torch.load("best_model.pth", weights_only=True))
+    model.load_state_dict(best_model)
     results = {
         'lr': lr,
         'seed': seed,
@@ -130,4 +132,4 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
         'best_va_loss': best_va_loss,
         'best_epoch': best_epoch,
         'epochs': epochs}
-    return best_model, results
+    return model, results

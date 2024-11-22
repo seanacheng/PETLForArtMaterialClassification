@@ -25,9 +25,8 @@ def main():
             pretrained_model = ViTModel(method="ft")
             # Training and validating (best model on val set returned):
             trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
-            torch.save(trained_model, f"results/best_ViT_FT_model.pth")
+            torch.save(trained_model.state_dict(), f"results/best_ViT_FT_model.pth")
 
-            trained_model.load_state_dict(torch.load("results/best_ViT_FT_model.pth", weights_only=True))
             # Testing model that performed best on validation set:
             final_acc = test(trained_model, test_loader) 
             print(f"final accuracy: {final_acc}")
