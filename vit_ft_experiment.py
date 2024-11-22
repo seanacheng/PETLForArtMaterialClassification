@@ -28,8 +28,8 @@ def main():
             torch.save(trained_model.state_dict(), f"results/best_ViT_FT_model.pth")
 
             # Testing model that performed best on validation set:
-            final_acc = test(trained_model, test_loader) 
-            print(f"final accuracy: {final_acc}")
+            accuracy, balanced_acc = test(trained_model, test_loader) 
+            print(f"final accuracy: {accuracy}, balanced accuracy: {balanced_acc}")
 
             df = pd.DataFrame({
                 'total_loss': results['tr']['loss'],
@@ -45,7 +45,7 @@ def main():
 
             plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
             plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-            plt.title(f'ViT FT test accuracy={final_acc}\nlr={lr}, seed={seed}')
+            plt.title(f'ViT FT\nlr={lr}, seed={seed}')
             plt.legend()
 
             df.to_csv(f'results/ViT_FT_lr_{lr}_seed_{seed}.csv')
