@@ -12,7 +12,7 @@ class ViTModel(torch.nn.Module):
         self.method = method
         self.model = models.vit_b_16(weights=ViT_B_16_Weights.IMAGENET1K_V1)
         torch.manual_seed(int(seed))
-        self.model.heads.head = nn.Linear(768, n_target_classes)
+        self.model.head = nn.Linear(768, n_target_classes)
 
         self.side_network = None
         if self.method == "st":
