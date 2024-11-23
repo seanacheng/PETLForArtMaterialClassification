@@ -31,8 +31,15 @@ class SwinModel(torch.nn.Module):
         x = self.model.forward_features(x)  # Extract features
         print(f'Features shape: {x.shape}')  # Debug print
 
+        x = x.permute(0, 3, 1, 2)  # Shape: [batch_size, 1024, 7, 7]
+        print(f'After permute: {x.shape}')  # Debug print
+
         x = self.global_avg_pool(x)  # Apply global average pooling
         print(f'After global avg pool: {x.shape}')  # Debug print
+
+        # Permute back to the original order
+        x = x.permute(0, 2, 3, 1)  # Shape: [batch_size, 1, 1, 1024]
+        print(f'After permute back: {x.shape}')  # Debug print
 
         x = torch.flatten(x, 1)  # Flatten the tensor
         print(f'After flattening: {x.shape}')  # Debug print
