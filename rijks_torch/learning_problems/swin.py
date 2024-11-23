@@ -11,7 +11,7 @@ class SwinModel(torch.nn.Module):
         self.method = method
         self.model = timm.create_model('swin_base_patch4_window7_224', pretrained=pretrained)
         torch.manual_seed(int(seed))
-        self.model.head = nn.Linear(768, n_target_classes)
+        self.model.head = nn.Linear(1024, n_target_classes)
 
         self.side_network = None
         if self.method == "st":
