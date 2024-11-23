@@ -81,8 +81,6 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
             va_err = 0
             for x_val, y_val in val_loader:
                 logits = model(x_val.to(device))
-                print(f'Logits shape: {logits.shape}')
-                print(f'y_val shape: {y_val.to(device).shape}')
                 xent_loss_func = nn.CrossEntropyLoss(reduction='sum')
                 va_xent += xent_loss_func(logits, y_val.to(device)).item()
 
