@@ -16,7 +16,7 @@ class SwinModel(torch.nn.Module):
         self.side_network = None
         if self.method == "st":
             self.side_network = nn.Sequential(
-                nn.Linear(self.model.heads.head.in_features, 512),
+                nn.Linear(self.model.head.in_features, 512),
                 nn.ReLU(),
                 nn.Linear(512, n_target_classes)
             )
