@@ -15,9 +15,9 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    seeds = [17, 204]
-    lrs = [0.01]
-    l2pen = 0.1
+    seeds = [17, 596, 2043]
+    lrs = [0.001, 0.01, 0.1]
+    l2pen = 0.01
     epochs = 100
 
     for lr in lrs:
@@ -48,7 +48,7 @@ def main():
             plt.title(f'Swin LP\nlr={lr}, seed={seed}')
             plt.legend()
 
-            df.to_csv(f'results/Swin_LP_lr_{str(lr)[2:]}_seed_{seed}.csv')
+            df.to_csv(f'results/Swin_LP_lr:{str(lr)[2:]}_seed:{seed}.csv')
 
 if __name__ == "__main__":
     main()
