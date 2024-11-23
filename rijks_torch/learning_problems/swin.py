@@ -30,7 +30,8 @@ class SwinModel(torch.nn.Module):
     def forward(self, x):
         x = self.model.forward_features(x)  # Extract features
         x = self.global_avg_pool(x)  # Apply global average pooling
-        x = torch.flatten(x, 1)  # Flatten the tensor
+        print(x.shape)
+        x = torch.flatten(x, 3)  # Flatten the tensor
         main_output = self.model.head(x)  # Classification head
         
         if self.method == "st":
