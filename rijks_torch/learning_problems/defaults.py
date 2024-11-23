@@ -1,13 +1,16 @@
 from torchvision import transforms
-from torch import nn
 
-def freezeLayers(model, method, n_target_classes):
+def freezeLayers(model, method):
     if method == "lp":
         # Freeze all layers except the final classification head
         for param in model.parameters():
             param.requires_grad = False
-        for param in model.heads.head.parameters():
-            param.requires_grad = True
+        if hasattr(model, 'heads'): # ViT model has heads.head
+            for param in model.heads.head.parameters():
+                param.requires_grad = True
+        elif hasattr(model, 'head'): # Swin model has head
+            for param in model.head.parameters():
+                param.requires_grad = True
 
     elif method == "ft":
         # Full fine-tuning: all layers are trainable
@@ -18,12 +21,6 @@ def freezeLayers(model, method, n_target_classes):
         # Side-network tuning: freeze the main model and add a side network
         for param in model.parameters():
             param.requires_grad = False
-        # Example side network (you can customize this)
-        model.side_network = nn.Sequential(
-            nn.Linear(model.head.in_features, 512),
-            nn.ReLU(),
-            nn.Linear(512, n_target_classes)
-        )
         for param in model.side_network.parameters():
             param.requires_grad = True
 

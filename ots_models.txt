@@ -1,2 +1,0 @@
-vit_b_16
-swin_b

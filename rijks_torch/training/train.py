@@ -2,7 +2,6 @@ import torch
 from torch import nn, optim
 import sklearn.metrics
 import numpy as np
-
 import tqdm
 from copy import deepcopy
 
@@ -20,7 +19,7 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
     epochs = []
 
     # Keeping track of the best model:
-    best_model = deepcopy(model.state_dict())
+    best_model = None
     best_va_loss = float('inf')
     best_epoch = 0
 
@@ -87,6 +86,7 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
 
                 va_err += sklearn.metrics.zero_one_loss(
                     logits.argmax(axis=1).detach().cpu().numpy(), y_val, normalize=False)
+            va_xent = va_xent / n_valid
             va_err_rate = va_err / n_valid
 
         # Update diagnostics and progress bar
@@ -109,17 +109,17 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
             best_tr_err_rate = tr_err_rate
             best_va_err_rate = va_err_rate
             best_model = deepcopy(model.state_dict())
-            torch.save(best_model, f"best_model.pth")
         elif epoch - best_epoch >= early_stop_after_epochs:
             print("Stopped early.")
             break
+
     print(f"Finished after epoch {epoch}, best epoch={best_epoch}")
     print("best va_xent %.3f" % best_va_loss)
     print("best tr_err %.3f" % best_tr_err_rate)
     print("best va_err %.3f" % best_va_err_rate)
 
     # Return the best model found:
-    model.load_state_dict(torch.load("best_model.pth", weights_only=True))
+    model.load_state_dict(best_model)
     results = {
         'lr': lr,
         'seed': seed,
