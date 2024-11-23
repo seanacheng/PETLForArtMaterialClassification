@@ -5,11 +5,11 @@ def freezeLayers(model, method):
         # Freeze all layers except the final classification head
         for param in model.parameters():
             param.requires_grad = False
-        if model.heads:
-            for param in model.heads.head.parameters(): # ViT model has heads.head
+        if hasattr(model, 'heads'): # ViT model has heads.head
+            for param in model.heads.head.parameters():
                 param.requires_grad = True
-        else:
-            for param in model.head.parameters(): # Swin model has head
+        elif hasattr(model, 'head'): # Swin model has head
+            for param in model.head.parameters():
                 param.requires_grad = True
 
     elif method == "ft":
