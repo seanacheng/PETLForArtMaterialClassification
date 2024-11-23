@@ -5,11 +5,11 @@ import timm
 
 class SwinModel(torch.nn.Module):
 
-    def __init__(self, method: str = "lp", seed: int = 42, n_target_classes: int = 15, pretrained=True):
+    def __init__(self, method: str = "lp", seed: int = 42, n_target_classes: int = 15):
         super().__init__()
 
         self.method = method
-        self.model = timm.create_model('swin_base_patch4_window7_224', pretrained=pretrained)
+        self.model = timm.create_model('swin_base_patch4_window7_224', pretrained=True)
         torch.manual_seed(int(seed))
         self.model.head = nn.Linear(1024, n_target_classes)
 

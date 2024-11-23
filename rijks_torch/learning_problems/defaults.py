@@ -5,7 +5,7 @@ def freezeLayers(model, method):
         # Freeze all layers except the final classification head
         for param in model.parameters():
             param.requires_grad = False
-        for param in model.heads.head.parameters():
+        for param in model.head.parameters():
             param.requires_grad = True
 
     elif method == "ft":
