@@ -13,6 +13,9 @@ class SwinModel(torch.nn.Module):
         torch.manual_seed(int(seed))
         self.model.head = nn.Linear(1024, n_target_classes)
 
+        # Global average pooling layer
+        self.global_avg_pool = nn.AdaptiveAvgPool2d((1, 1))
+
         self.side_network = None
         if self.method == "st":
             self.side_network = nn.Sequential(
@@ -25,13 +28,16 @@ class SwinModel(torch.nn.Module):
     
 
     def forward(self, x):
-        main_output = self.model(x)
+        x = self.model.forward_features(x)  # Extract features
+        x = self.global_avg_pool(x)  # Apply global average pooling
+        x = torch.flatten(x, 1)  # Flatten the tensor
+        main_output = self.model.head(x)  # Classification head
         
         if self.method == "st":
             side_output = self.side_network(x)
             return main_output + side_output
         
-        return self.model(x)
+        return main_output
     
     def predict_proba(self, x):
         return torch.nn.functional.softmax(self.forward(x), dim=1)
