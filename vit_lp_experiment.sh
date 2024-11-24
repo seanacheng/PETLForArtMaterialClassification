@@ -11,7 +11,7 @@
 micromamba activate l3d_2024f_cuda_readonly
 
 # Specify Python version
-module load python/3.12.7
+module load python/3.10.4
 
 # Run the Python script
 python vit_lp_experiment.py

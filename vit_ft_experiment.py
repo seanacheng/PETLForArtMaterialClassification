@@ -20,17 +20,20 @@ def main():
     l2pens = [0.0, 0.01, 0.1]
     epochs = 100
 
+    best_acc = 0
     for lr in lrs:
         for seed in seeds:
             for l2pen in l2pens:
                 pretrained_model = ViTModel(method="ft")
                 # Training and validating (best model on val set returned):
                 trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
-                torch.save(trained_model.state_dict(), "results/best_ViT_FT_model.pth")
 
                 # Testing model that performed best on validation set:
                 accuracy, balanced_acc = test(trained_model, test_loader) 
                 print(f"final accuracy: {accuracy}, balanced accuracy: {balanced_acc}")
+                if balanced_acc > best_acc:
+                    best_acc = balanced_acc
+                    torch.save(trained_model.state_dict(), "results/best_ViT_FT_model.pth")
 
                 df = pd.DataFrame({
                     'total_loss': results['tr']['loss'],
@@ -49,7 +52,7 @@ def main():
                 plt.title(f'ViT FT\nlr={lr},seed={seed},l2pen={l2pen}')
                 plt.legend()
 
-                df.to_csv(f'results/ViT_FT_lr:{str(lr)[2:]}_seed:{seed}_l2pen:{str(l2pen)[2:]}.csv')
+                df.to_csv(f'results/ViT_FT_lr{str(lr)[2:]}_seed{seed}_l2pen{str(l2pen)[2:]}.csv')
 
 
 if __name__ == "__main__":
