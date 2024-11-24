@@ -10,8 +10,5 @@
 # Activate the micromamba environment
 micromamba activate l3d_2024f_cuda_readonly
 
-# Specify Python version
-module load python/3.10.4
-
 # Run the Python script
 python swin_ft_experiment.py

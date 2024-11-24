@@ -29,7 +29,7 @@ def main():
 
             # Testing model that performed best on validation set:
             accuracy, balanced_acc = test(trained_model, test_loader) 
-            print(f"final accuracy: {accuracy}, balanced accuracy: {balanced_acc}")
+            print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
             if balanced_acc > best_acc:
                 best_acc = balanced_acc
                 torch.save(trained_model.state_dict(), "results/best_Swin_LP_model.pth")
@@ -48,10 +48,10 @@ def main():
 
             plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
             plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-            plt.title(f'Swin LP\nlr={lr}, seed={seed}')
+            plt.title('Swin LP\nlr={}, seed={}'.format(lr, seed))
             plt.legend()
 
-            df.to_csv(f'results/Swin_LP_lr{str(lr)[2:]}_seed{seed}.csv')
+            df.to_csv('results/Swin_LP_lr{}_seed{}.csv'.format(str(lr)[2:], seed))
 
 if __name__ == "__main__":
     main()
