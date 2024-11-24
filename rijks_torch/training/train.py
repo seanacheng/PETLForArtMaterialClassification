@@ -123,6 +123,7 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
     results = {
         'lr': lr,
         'seed': seed,
+        'l2pen': l2pen,
         'tr':tr_info,
         'va':va_info,
         'best_tr_err': best_tr_err_rate,
