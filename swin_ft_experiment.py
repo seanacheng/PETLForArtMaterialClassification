@@ -15,13 +15,13 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.001, 0.01, 0.1]
+    lrs = [0.0001, 0.001]
     seeds = [17, 596, 2043]
-    l2pens = [0.0, 0.01, 0.1]
     seed = 596  # simplify training 
     l2pen = 0.01  # simplify training
     epochs = 100
 
+    first_run = True
     best_acc = 0
     for lr in lrs:
         # for seed in seeds:
