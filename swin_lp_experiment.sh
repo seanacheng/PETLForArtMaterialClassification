@@ -8,7 +8,7 @@
 #SBATCH --gres=gpu:1
 
 # Activate the micromamba environment
-micromamba activate l3d_2024f_cuda_readonly
+/cluster/tufts/cs152l3dclass/shared/bin/micromamba activate l3d_2024f_cuda_readonly
 python --version
 
 # Run the Python script
