@@ -9,6 +9,7 @@
 
 # Activate the micromamba environment
 micromamba activate l3d_2024f_cuda_readonly
+python --version
 
 # Run the Python script
 python vit_st_experiment.py
