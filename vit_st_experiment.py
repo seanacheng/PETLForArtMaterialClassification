@@ -17,7 +17,7 @@ def main():
 
     lrs = [0.00001, 0.0001, 0.001]
     seeds = [17, 596, 2043]
-    seed = 596  # simplify training 
+    seed = 596  # simplify training
     l2pen = 0.01  # simplify training
     epochs = 100
 
@@ -25,8 +25,7 @@ def main():
     best_acc = 0
     for lr in lrs:
         # for seed in seeds:
-        #     for l2pen in l2pens:
-        pretrained_model = ViTModel(method="ft")
+        pretrained_model = ViTModel(method="st")
         # Training and validating (best model on val set returned):
         trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
 
@@ -35,7 +34,7 @@ def main():
         print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
         if balanced_acc > best_acc:
             best_acc = balanced_acc
-            torch.save(trained_model.state_dict(), "results/best_ViT_FT_model.pth")
+            torch.save(trained_model.state_dict(), "results/best_ViT_ST_model.pth")
 
         df = pd.DataFrame({
             'total_loss': results['tr']['loss'],
@@ -46,23 +45,21 @@ def main():
             'epoch':      results['epochs'],
             'seed':       results['seed'],
             'lr':         results['lr'],
-            'l2pen':      results['l2pen']
         })
         if first_run:
-            df.to_csv('results/ViT_FT.csv', mode="w", index=False, header=True) # overwrites if file already exists
+            df.to_csv('results/ViT_ST.csv', mode="w", index=False, header=True) # overwrites if file already exists
             first_run = False
         else:
-            df.to_csv('results/ViT_FT.csv', mode="a", index=False, header=False)
+            df.to_csv('results/ViT_ST.csv', mode="a", index=False, header=False)
 
         plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
         plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
 
         plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
         plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-        plt.title('ViT FT\nlr={},seed={},l2pen={}'.format(lr, seed, l2pen))
+        plt.title('ViT ST\nlr={}, seed={}'.format(lr, seed))
         plt.legend()
-        plt.savefig('results/ViT_FT_lr{}_seed{}_l2pen{}.jpg'.format(str(lr)[2:], seed, str(l2pen)[2:]))
-
+        plt.savefig('results/ViT_ST_lr{}_seed{}.jpg'.format(str(lr)[2:], seed))
 
 
 if __name__ == "__main__":
