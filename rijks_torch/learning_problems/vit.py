@@ -22,7 +22,7 @@ class ViTModel(torch.nn.Module):
                 nn.Linear(512, n_target_classes)
             )
 
-        freezeLayers(self.model, self.method)
+        freezeLayers(self.model, self.method, self.side_network)
     
 
     def forward(self,x):
