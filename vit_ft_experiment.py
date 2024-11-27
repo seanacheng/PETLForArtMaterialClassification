@@ -15,7 +15,7 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.00001, 0.0001, 0.001]
+    lrs = [0.0001, 0.001]
     seeds = [17, 596, 2043]
     l2pen = 0.01  # simplify training
     epochs = 200
@@ -24,7 +24,7 @@ def main():
     best_acc = 0
     for lr in lrs:
         for seed in seeds:
-            pretrained_model = ViTModel(method="ft")
+            pretrained_model = ViTModel(method="ft", seed=seed)
             print("lr: {}, seed: {}".format(lr, seed))
             # Training and validating (best model on val set returned):
             trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)

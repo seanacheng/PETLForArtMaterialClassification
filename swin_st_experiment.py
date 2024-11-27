@@ -24,7 +24,7 @@ def main():
     best_acc = 0
     for lr in lrs:
         for seed in seeds:
-            pretrained_model = SwinModel(method="st")
+            pretrained_model = SwinModel(method="st", seed=seed)
             print("lr: {}, seed: {}".format(lr, seed))
             # Training and validating (best model on val set returned):
             trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)

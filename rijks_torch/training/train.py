@@ -5,12 +5,14 @@ import numpy as np
 import tqdm
 from copy import deepcopy
 
-def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, seed=12, l2pen=0.0):
+def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, seed=42, l2pen=0.0):
     """
     Function for training a model
     """
     
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    torch.manual_seed(seed)      
+    torch.cuda.manual_seed(seed)
     model.to(device)
 
     # Allocate lists for tracking progress each epoch
