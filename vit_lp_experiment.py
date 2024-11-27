@@ -18,7 +18,7 @@ def main():
     lrs = [0.0001, 0.001, 0.01]
     seeds = [17, 596, 2043]
     l2pen = 0.01  # simplify training
-    epochs = 100
+    epochs = 200
 
     first_run = True
     best_acc = 0
