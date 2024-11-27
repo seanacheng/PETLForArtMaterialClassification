@@ -52,15 +52,17 @@ def main():
                 first_run = False
             else:
                 df.to_csv('results/Swin_FT.csv', mode="a", index=False, header=False)
+            
+            # plt.figure()
+            # plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
+            # plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
 
-            plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
-            plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
-
-            plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
-            plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-            plt.title('Swin FT\nlr={}, seed={}, l2pen={}'.format(lr, seed, l2pen))
-            plt.legend()
-            plt.savefig('results/Swin_FT_lr{}_seed{}_l2pen{}.jpg'.format(str(lr)[2:], seed, str(l2pen)[2:]))
+            # plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
+            # plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
+            # plt.title('Swin FT\nlr={}, seed={}, l2pen={}'.format(lr, seed, l2pen))
+            # plt.legend()
+            # plt.savefig('results/Swin_FT_lr{}_seed{}_l2pen{}.jpg'.format(str(lr)[2:], seed, str(l2pen)[2:]))
+            # plt.close()
 
 
 if __name__ == "__main__":

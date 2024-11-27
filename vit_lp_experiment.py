@@ -52,14 +52,16 @@ def main():
             else:
                 df.to_csv('results/ViT_LP.csv', mode="a", index=False, header=False)
 
-            plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
-            plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
+            # plt.figure()
+            # plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
+            # plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
 
-            plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
-            plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-            plt.title('ViT LP\nlr={}, seed={}'.format(lr, seed))
-            plt.legend()
-            plt.savefig('results/ViT_LP_lr{}_seed{}.jpg'.format(str(lr)[2:], seed))
+            # plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
+            # plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
+            # plt.title('ViT LP\nlr={}, seed={}'.format(lr, seed))
+            # plt.legend()
+            # plt.savefig('results/ViT_LP_lr{}_seed{}.jpg'.format(str(lr)[2:], seed))
+            # plt.close()
 
 
 if __name__ == "__main__":
