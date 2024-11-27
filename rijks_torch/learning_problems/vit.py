@@ -14,6 +14,9 @@ class ViTModel(torch.nn.Module):
         torch.manual_seed(seed)
         self.model.heads.head = nn.Linear(768, n_target_classes)
 
+        # Global average pooling layer
+        self.global_avg_pool = nn.AdaptiveAvgPool2d((1, 1))
+
         self.side_network = None
         if self.method == "st":
             self.side_network = nn.Sequential(
@@ -26,7 +29,12 @@ class ViTModel(torch.nn.Module):
     
 
     def forward(self,x):
-        main_output = self.model(x)
+        x = self.model._process_input(x)  # Extract features
+        x = x.permute(0, 2, 1)  # Shape: [batch_size, 768, 196]
+        x = self.global_avg_pool(x)  # Apply global average pooling
+        x = x.permute(0, 2, 1)  # Shape: [batch_size, 1, 768]
+        x = torch.flatten(x, 1)  # Flatten the tensor
+        main_output = self.model.heads.head(x)
 
         if self.method == "st":
             side_output = self.side_network(x)
