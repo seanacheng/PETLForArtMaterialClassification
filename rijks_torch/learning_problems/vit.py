@@ -15,7 +15,7 @@ class ViTModel(torch.nn.Module):
         self.model.heads.head = nn.Linear(768, n_target_classes)
 
         # Global average pooling layer
-        self.global_avg_pool = nn.AdaptiveAvgPool2d((1, 1))
+        self.global_avg_pool = nn.AdaptiveAvgPool1d(1)
 
         self.side_network = None
         if self.method == "st":
@@ -40,7 +40,7 @@ class ViTModel(torch.nn.Module):
             side_output = self.side_network(x)
             return main_output + side_output
         
-        return self.model(x)
+        return main_output
     
     def predict_proba(self, x):
         return torch.nn.functional.softmax(self.forward(x), dim=1)
