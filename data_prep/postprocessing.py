@@ -9,10 +9,10 @@ def create_visualization(arch, method):
     # Extract epochs
     epochs = grouped.index
 
-    plot_with_std(epochs, grouped['total_loss']['mean'], grouped['total_loss']['std'], 'Total Loss')
-    plot_with_std(epochs, grouped['train_err']['mean'], grouped['train_err']['std'], 'Train Error')
-    plot_with_std(epochs, grouped['val_loss']['mean'], grouped['val_loss']['std'], 'Validation Loss')
-    plot_with_std(epochs, grouped['val_err']['mean'], grouped['val_err']['std'], 'Validation Error')
+    plot_with_std(epochs, grouped['total_loss']['mean'], grouped['total_loss']['std'], '--', 'b', 'Total Loss')
+    plot_with_std(epochs, grouped['train_err']['mean'], grouped['train_err']['std'], '-', 'b', 'Train Error')
+    plot_with_std(epochs, grouped['val_loss']['mean'], grouped['val_loss']['std'], '--', 'r', 'Validation Loss')
+    plot_with_std(epochs, grouped['val_err']['mean'], grouped['val_err']['std'], '-', 'r', 'Validation Error')
 
     # Add labels and legend
     plt.xlabel('Epoch')
@@ -23,8 +23,8 @@ def create_visualization(arch, method):
     plt.show()
 
 # Plotting function
-def plot_with_std(x, y_mean, y_std, label):
-    plt.plot(x, y_mean, label=label)
+def plot_with_std(x, y_mean, y_std, linestyle, color, label):
+    plt.plot(x, y_mean, linestyle=linestyle, color=color, label=label)
     plt.fill_between(x, y_mean - y_std, y_mean + y_std, alpha=0.2)
 
 create_visualization("ViT", "LP")
