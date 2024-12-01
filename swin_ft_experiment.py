@@ -15,7 +15,7 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.00001, 0.0001, 0.001]
+    lrs = [0.00001, 0.0001]
     seeds = [17, 596, 2043]
     l2pen = 0.01  # simplify training
     epochs = 200
@@ -32,6 +32,7 @@ def main():
             # Testing model that performed best on validation set:
             accuracy, balanced_acc = test(trained_model, test_loader) 
             print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
+            print("-------------------------------------------------------------------------")
             if balanced_acc > best_acc:
                 best_acc = balanced_acc
                 # torch.save(trained_model.state_dict(), "results/best_Swin_FT_model.pth")
@@ -52,17 +53,6 @@ def main():
                 first_run = False
             else:
                 df.to_csv('results/Swin_FT.csv', mode="a", index=False, header=False)
-            
-            # plt.figure()
-            # plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
-            # plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
-
-            # plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
-            # plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-            # plt.title('Swin FT\nlr={}, seed={}, l2pen={}'.format(lr, seed, l2pen))
-            # plt.legend()
-            # plt.savefig('results/Swin_FT_lr{}_seed{}_l2pen{}.jpg'.format(str(lr)[2:], seed, str(l2pen)[2:]))
-            # plt.close()
 
 
 if __name__ == "__main__":

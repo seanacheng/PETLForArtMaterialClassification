@@ -32,6 +32,7 @@ def main():
             # Testing model that performed best on validation set:
             accuracy, balanced_acc = test(trained_model, test_loader) 
             print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
+            print("-------------------------------------------------------------------------")
             if balanced_acc > best_acc:
                 best_acc = balanced_acc
                 # torch.save(trained_model.state_dict(), "results/best_Swin_LP_model.pth")
@@ -51,17 +52,6 @@ def main():
                 first_run = False
             else:
                 df.to_csv('results/Swin_LP.csv', mode="a", index=False, header=False)
-
-            # plt.figure()
-            # plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
-            # plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
-
-            # plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
-            # plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-            # plt.title('Swin LP\nlr={}, seed={}'.format(lr, seed))
-            # plt.legend()
-            # plt.savefig('results/Swin_LP_lr{}_seed{}.jpg'.format(str(lr)[2:], seed))
-            # plt.close()
 
 
 if __name__ == "__main__":
