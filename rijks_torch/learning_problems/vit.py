@@ -14,9 +14,6 @@ class ViTModel(torch.nn.Module):
         torch.manual_seed(seed)
         self.model.heads.head = nn.Linear(768, n_target_classes)
 
-        # Global average pooling layer
-        self.global_avg_pool = nn.AdaptiveAvgPool1d(1)
-
         self.side_network = None
         if self.method == "st":
             self.side_network = nn.Sequential(
@@ -29,15 +26,17 @@ class ViTModel(torch.nn.Module):
     
 
     def forward(self,x):
-        x = self.model._process_input(x)  # Extract features
-        x = x.permute(0, 2, 1)  # Shape: [batch_size, 768, 196]
-        x = self.global_avg_pool(x)  # Apply global average pooling
-        x = x.permute(0, 2, 1)  # Shape: [batch_size, 1, 768]
-        x = torch.flatten(x, 1)  # Flatten the tensor
-        main_output = self.model.heads.head(x)
+        main_output = self.model(x)
 
         if self.method == "st":
-            side_output = self.side_network(x)
+            x = self.model._process_input(x)  # Extract features
+            # Expand the CLS token to the full batch
+            batch_class_token = self.model.class_token.expand(x.shape[0], -1, -1)
+            # Concatenates the expanded class_token with the input tensor
+            x = torch.cat([batch_class_token, x], dim=1)
+            x = self.model.encoder(x) # pass through the transformer encoder layers
+            # Only want the representation of the CLS token appended at position 0
+            side_output = self.side_network(x[:, 0])
             return main_output + side_output
         
         return main_output
