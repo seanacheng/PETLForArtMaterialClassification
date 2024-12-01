@@ -10,7 +10,7 @@ class SwinModel(torch.nn.Module):
 
         self.method = method
         self.model = timm.create_model('swin_base_patch4_window7_224', pretrained=True)
-        torch.manual_seed(int(seed))
+        torch.manual_seed(seed)
         self.model.head = nn.Linear(1024, n_target_classes)
 
         # Global average pooling layer
@@ -24,7 +24,7 @@ class SwinModel(torch.nn.Module):
                 nn.Linear(512, n_target_classes)
             )
 
-        freezeLayers(self.model, self.method)
+        freezeLayers(self.model, self.method, self.side_network)
     
 
     def forward(self, x):

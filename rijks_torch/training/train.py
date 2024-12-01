@@ -5,12 +5,14 @@ import numpy as np
 import tqdm
 from copy import deepcopy
 
-def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, seed=12, l2pen=0.0):
+def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, seed=42, l2pen=0.0):
     """
     Function for training a model
     """
     
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    torch.manual_seed(seed)      
+    torch.cuda.manual_seed(seed)
     model.to(device)
 
     # Allocate lists for tracking progress each epoch
@@ -40,6 +42,8 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
             tr_xent = 0.0  # aggregate cross-entropy
             tr_err = 0     # count mistakes on train set
             pbar_info['batch_done'] = 0
+            pbar_info['lr'] = lr
+            pbar_info['seed'] = seed
             for batchnum, (x, y) in enumerate(train_loader):
                 optimizer.zero_grad()
 
@@ -97,8 +101,8 @@ def train(model: nn.Module, train_loader, val_loader, lr=0.01, num_epochs=20, se
         va_info['xent'].append(va_xent)
         va_info['err'].append(va_err_rate)
         pbar_info.update({
-            "tr_xent": tr_xent, "tr_err": tr_err_rate,
-            "va_xent": va_xent, "va_err": va_err_rate,
+            "tr_err": tr_err_rate,
+            "va_err": va_err_rate,
             })
         progressbar.set_postfix(pbar_info)
 
