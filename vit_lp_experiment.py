@@ -3,7 +3,6 @@ from rijks_torch.learning_problems import ViTModel
 import rijks_torch.learning_problems.defaults as defs
 from rijks_torch.data_loading.rijksdataloader import RijksDataloader
 from rijks_torch.training import train, test
-import matplotlib.pyplot as plt
 import pandas as pd
 
 
