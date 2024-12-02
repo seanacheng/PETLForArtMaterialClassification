@@ -14,9 +14,9 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.01, 0.001, 0.0001]
+    lrs = [0.0001]
     seeds = [17, 596, 2043]
-    l2pens = [0.0, 0.01, 0.02]
+    l2pens = [0.01]
     epochs = 200
 
     first_run = True
@@ -44,10 +44,10 @@ def main():
                     'l2pen':        [l2pen],
                 })
                 if first_run:
-                    df.to_csv('results/ViT_LP.csv', mode="w", index=False, header=True) # overwrites if file already exists
+                    df.to_csv('results/ViT_LP_hyperparameter_search.csv', mode="w", index=False, header=True) # overwrites if file already exists
                     first_run = False
                 else:
-                    df.to_csv('results/ViT_LP.csv', mode="a", index=False, header=False)
+                    df.to_csv('results/ViT_LP_hyperparameter_search.csv', mode="a", index=False, header=False)
 
 
 if __name__ == "__main__":
