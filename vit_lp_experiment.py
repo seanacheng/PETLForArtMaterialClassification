@@ -19,7 +19,7 @@ def main():
     l2pens = [0.01]
     epochs = 200
 
-    first_run = True
+    first_run = False
     best_acc = 0
     for lr in lrs:
         for seed in seeds:
@@ -38,16 +38,20 @@ def main():
                 #     torch.save(trained_model.state_dict(), "results/best_ViT_LP_model.pth")
 
                 df = pd.DataFrame({
-                    'balanced_acc': [balanced_acc],
-                    'lr':           [lr],
-                    'seed':         [seed],
-                    'l2pen':        [l2pen],
+                    'total_loss': results['tr']['loss'],
+                    'train_loss': results['tr']['xent'],
+                    'train_err':  results['tr']['err'],
+                    'val_loss':   results['va']['xent'],
+                    'val_err':    results['va']['err'],
+                    'epoch':      results['epochs'],
+                    'seed':       results['seed'],
+                    'lr':         results['lr'],
                 })
                 if first_run:
-                    df.to_csv('results/ViT_LP_hyperparameter_search.csv', mode="w", index=False, header=True) # overwrites if file already exists
+                    df.to_csv('results/ViT_LP.csv', mode="w", index=False, header=True) # overwrites if file already exists
                     first_run = False
                 else:
-                    df.to_csv('results/ViT_LP_hyperparameter_search.csv', mode="a", index=False, header=False)
+                    df.to_csv('results/ViT_LP.csv', mode="a", index=False, header=False)
 
 
 if __name__ == "__main__":
