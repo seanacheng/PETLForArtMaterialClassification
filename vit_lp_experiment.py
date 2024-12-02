@@ -14,43 +14,40 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.001, 0.01]
-    seeds = [17, 381, 596, 1365, 2043]
-    l2pen = 0.01  # simplify training
-    epochs = 100
+    lrs = [0.00001, 0.0001, 0.001, 0.01]
+    seeds = [17, 596, 2043]
+    l2pens = [0.0, 0.01, 0.02]
+    epochs = 200
 
     first_run = True
     best_acc = 0
     for lr in lrs:
         for seed in seeds:
-            pretrained_model = ViTModel(method="lp", seed=seed)
-            print("lr: {}, seed: {}".format(lr, seed))
-            # Training and validating (best model on val set returned):
-            trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
+            for l2pen in l2pens:
+                pretrained_model = ViTModel(method="lp", seed=seed)
+                print("lr: {}, seed: {}, l2pen: {}".format(lr, seed, l2pen))
+                # Training and validating (best model on val set returned):
+                trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
 
-            # Testing model that performed best on validation set:
-            accuracy, balanced_acc = test(trained_model, test_loader) 
-            print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
-            print("-------------------------------------------------------------------------")
-            if balanced_acc > best_acc:
-                best_acc = balanced_acc
-                # torch.save(trained_model.state_dict(), "results/best_ViT_LP_model.pth")
+                # Testing model that performed best on validation set:
+                accuracy, balanced_acc = test(trained_model, test_loader) 
+                print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
+                print("-------------------------------------------------------------------------")
+                # if balanced_acc > best_acc:
+                #     best_acc = balanced_acc
+                #     torch.save(trained_model.state_dict(), "results/best_ViT_LP_model.pth")
 
-            df = pd.DataFrame({
-                'total_loss': results['tr']['loss'],
-                'train_loss': results['tr']['xent'],
-                'train_err':  results['tr']['err'],
-                'val_loss':   results['va']['xent'],
-                'val_err':    results['va']['err'],
-                'epoch':      results['epochs'],
-                'seed':       results['seed'],
-                'lr':         results['lr'],
-            })
-            if first_run:
-                df.to_csv('results/ViT_LP.csv', mode="w", index=False, header=True) # overwrites if file already exists
-                first_run = False
-            else:
-                df.to_csv('results/ViT_LP.csv', mode="a", index=False, header=False)
+                df = pd.DataFrame({
+                    'balanced_acc': balanced_acc,
+                    'lr':           lr,
+                    'seed':         seed,
+                    'l2pen':        l2pen,
+                })
+                if first_run:
+                    df.to_csv('results/ViT_LP.csv', mode="w", index=False, header=True) # overwrites if file already exists
+                    first_run = False
+                else:
+                    df.to_csv('results/ViT_LP.csv', mode="a", index=False, header=False)
 
 
 if __name__ == "__main__":
