@@ -14,7 +14,7 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.00001, 0.0001, 0.001, 0.01]
+    lrs = [0.01, 0.001, 0.0001]
     seeds = [17, 596, 2043]
     l2pens = [0.0, 0.01, 0.02]
     epochs = 200
@@ -38,10 +38,10 @@ def main():
                 #     torch.save(trained_model.state_dict(), "results/best_Swin_LP_model.pth")
 
                 df = pd.DataFrame({
-                    'balanced_acc': balanced_acc,
-                    'lr':           lr,
-                    'seed':         seed,
-                    'l2pen':        l2pen,
+                    'balanced_acc': [balanced_acc],
+                    'lr':           [lr],
+                    'seed':         [seed],
+                    'l2pen':        [l2pen],
                 })
                 if first_run:
                     df.to_csv('results/Swin_LP.csv', mode="w", index=False, header=True) # overwrites if file already exists
