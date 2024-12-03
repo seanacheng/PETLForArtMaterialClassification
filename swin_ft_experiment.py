@@ -32,9 +32,9 @@ def main():
             accuracy, balanced_acc = test(trained_model, test_loader) 
             print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
             print("-------------------------------------------------------------------------")
-            if balanced_acc > best_acc:
-                best_acc = balanced_acc
-                # torch.save(trained_model.state_dict(), "results/best_Swin_FT_model.pth")
+            # if balanced_acc > best_acc:
+            #     best_acc = balanced_acc
+            #     torch.save(trained_model.state_dict(), "results/best_Swin_FT_model.pth")
 
             df = pd.DataFrame({
                 'total_loss': results['tr']['loss'],

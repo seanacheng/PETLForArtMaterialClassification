@@ -14,12 +14,13 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.0001, 0.001]
-    seeds = [17, 381, 596, 1365, 2043]
+    lrs = [0.0001, 0.001, 0.01]
+    # seeds = [17, 381, 596, 1365, 2043]
+    seeds = [17, 596, 2043]
     l2pen = 0.01  # simplify training
     epochs = 200
 
-    first_run = True
+    first_run = False
     best_acc = 0
     for lr in lrs:
         for seed in seeds:
@@ -32,9 +33,9 @@ def main():
             accuracy, balanced_acc = test(trained_model, test_loader) 
             print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
             print("-------------------------------------------------------------------------")
-            if balanced_acc > best_acc:
-                best_acc = balanced_acc
-                # torch.save(trained_model.state_dict(), "results/best_Swin_ST_model.pth")
+            # if balanced_acc > best_acc:
+            #     best_acc = balanced_acc
+            #     torch.save(trained_model.state_dict(), "results/best_Swin_ST_model.pth")
 
             df = pd.DataFrame({
                 'total_loss': results['tr']['loss'],
