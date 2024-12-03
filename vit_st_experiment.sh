@@ -2,7 +2,7 @@
 #SBATCH --job-name=vit_st_experiment
 #SBATCH --output=vit_st_experiment_%j.log
 #SBATCH --error=vit_st_experiment_%j.err
-#SBATCH --time=0-02:00
+#SBATCH --time=0-03:00
 #SBATCH --mem=2000
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:1
