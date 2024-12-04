@@ -25,6 +25,18 @@ def test(model: nn.Module, test_loader):
             all_preds.extend(pred_y.cpu().numpy())
             all_labels.extend(y.cpu().numpy())
 
+            for label, pred in zip(y.cpu().numpy(), pred_y.cpu().numpy()):
+                total_per_class[label] += 1
+                if label == pred:
+                    correct_per_class[label] += 1
+
     accuracy = correct / len(test_loader.dataset)
     balanced_acc = balanced_accuracy_score(all_labels, all_preds)
-    return accuracy, balanced_acc
+
+    per_class_accuracy = {
+        label: correct_per_class[label] / total_per_class[label]
+        for label in total_per_class
+        }
+
+
+    return accuracy, balanced_acc, per_class_accuracy
