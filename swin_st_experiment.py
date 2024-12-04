@@ -14,7 +14,7 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.01, 0.001, 0.0001, 0.00001]
+    lrs = [0.001]
     # seeds = [17, 381, 596, 1365, 2043]
     seeds = [17, 596, 2043]
     l2pen = 0.01
