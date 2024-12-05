@@ -44,7 +44,11 @@ def test(model: nn.Module, test_loader):
             all_labels.extend(y.cpu().numpy())
 
             for label, pred in zip(y.cpu().numpy(), pred_y.cpu().numpy()):
-                total_per_class[label] += 1
+                if label in total_per_class:
+                    total_per_class[label] += 1
+                else:
+                    total_per_class[label] == 1
+                    correct_per_class[label] == 0
 
                 if label == pred:
                     correct_per_class[label] += 1
