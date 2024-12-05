@@ -12,15 +12,14 @@ def test(model: nn.Module, test_loader):
     model.eval()
     all_preds = []
     all_labels = []
+    total_per_class = {}
+    correct_per_class = {}
 
-    correct = 0
     with torch.no_grad():
         for x, y in test_loader:
 
             logits = model(x.to(device))
             pred_y = torch.argmax(logits, dim=1)
-
-            correct += torch.sum(pred_y == y.to(device)).item()
             
             all_preds.extend(pred_y.cpu().numpy())
             all_labels.extend(y.cpu().numpy())
@@ -30,7 +29,6 @@ def test(model: nn.Module, test_loader):
                 if label == pred:
                     correct_per_class[label] += 1
 
-    accuracy = correct / len(test_loader.dataset)
     balanced_acc = balanced_accuracy_score(all_labels, all_preds)
 
     per_class_accuracy = {
@@ -39,4 +37,4 @@ def test(model: nn.Module, test_loader):
         }
 
 
-    return accuracy, balanced_acc, per_class_accuracy
+    return balanced_acc, per_class_accuracy
