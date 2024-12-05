@@ -30,7 +30,7 @@ def main():
             trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
 
             # Testing model that performed best on validation set:
-            accuracy, balanced_acc = test(trained_model, test_loader)
+            balanced_acc, acc_per_class = test(trained_model, test_loader)
             end_time = time.time()
             runtime = end_time - start_time
             print("runtime: {}, balanced accuracy: {}".format(runtime, balanced_acc))
@@ -55,6 +55,11 @@ def main():
             else:
                 df.to_csv('results/Swin_FT.csv', mode="a", index=False, header=False)
 
+            class_acc_list = [[material, acc_per_class[material]] for material in acc_per_class]
+            class_acc_list.sort(key = lambda x: x[1], reverse = True)
+            with open('results/Swin_FT_acc_per_class', 'a') as f:
+                for row in class_acc_list:
+                    f.writelines(f"{row[0]}, {row[1]}\n")
 
 if __name__ == "__main__":
     main()

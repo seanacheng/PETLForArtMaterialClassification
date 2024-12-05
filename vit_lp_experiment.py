@@ -30,7 +30,7 @@ def main():
             trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
 
             # Testing model that performed best on validation set:
-            accuracy, balanced_acc = test(trained_model, test_loader) 
+            balanced_acc, acc_per_class = test(trained_model, test_loader) 
             end_time = time.time()
             runtime = end_time - start_time
             print("runtime: {}, balanced accuracy: {}".format(runtime, balanced_acc))
