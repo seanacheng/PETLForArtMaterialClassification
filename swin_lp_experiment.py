@@ -17,7 +17,7 @@ def main():
     lrs = [0.01]
     seeds = [17, 381, 596, 1365, 2043]
     l2pen = 0.01
-    epochs = 50
+    epochs = 150
 
     first_run = True
     best_acc = 0

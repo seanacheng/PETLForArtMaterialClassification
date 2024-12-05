@@ -12,8 +12,27 @@ def test(model: nn.Module, test_loader):
     model.eval()
     all_preds = []
     all_labels = []
-    total_per_class = {}
-    correct_per_class = {}
+    
+    materials = [
+        'papier',
+        'zilver',
+        'faience',
+        'porselein',
+        'hout',
+        'brons',
+        'glas (materiaal)',
+        'perkament',
+        'geprepareerd papier',
+        'fotopapier',
+        'ijzer',
+        'Japans papier',
+        'ivoor',
+        'Oosters papier',
+        'eikenhout'
+    ]
+
+    total_per_class = {material: 0 for material in materials}
+    correct_per_class = {material: 0 for material in materials}
 
     with torch.no_grad():
         for x, y in test_loader:
@@ -26,6 +45,7 @@ def test(model: nn.Module, test_loader):
 
             for label, pred in zip(y.cpu().numpy(), pred_y.cpu().numpy()):
                 total_per_class[label] += 1
+
                 if label == pred:
                     correct_per_class[label] += 1
 
