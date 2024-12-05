@@ -3,9 +3,8 @@ from rijks_torch.learning_problems import ViTModel
 import rijks_torch.learning_problems.defaults as defs
 from rijks_torch.data_loading.rijksdataloader import RijksDataloader
 from rijks_torch.training import train, test
-import matplotlib.pyplot as plt
 import pandas as pd
-
+import time
 
 def main():
     
@@ -15,26 +14,30 @@ def main():
     # Creating the dataloaders from given arguments:
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
-    lrs = [0.00001, 0.0001, 0.001]
+    lrs = [0.00001]
     seeds = [17, 596, 2043]
     l2pen = 0.01  # simplify training
     epochs = 200
 
-    first_run = True
+    first_run = False
     best_acc = 0
     for lr in lrs:
         for seed in seeds:
+            start_time = time.time()
             pretrained_model = ViTModel(method="ft", seed=seed)
             print("lr: {}, seed: {}".format(lr, seed))
             # Training and validating (best model on val set returned):
             trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
 
             # Testing model that performed best on validation set:
-            accuracy, balanced_acc = test(trained_model, test_loader) 
-            print("final accuracy: {}, balanced accuracy: {}".format(accuracy, balanced_acc))
-            if balanced_acc > best_acc:
-                best_acc = balanced_acc
-                # torch.save(trained_model.state_dict(), "results/best_ViT_FT_model.pth")
+            accuracy, balanced_acc = test(trained_model, test_loader)
+            end_time = time.time()
+            runtime = end_time - start_time
+            print("runtime: {}, balanced accuracy: {}".format(runtime, balanced_acc))
+            print("-------------------------------------------------------------------------")
+            # if balanced_acc > best_acc:
+            #     best_acc = balanced_acc
+            #     torch.save(trained_model.state_dict(), "results/best_ViT_FT_model.pth")
 
             df = pd.DataFrame({
                 'total_loss': results['tr']['loss'],
@@ -45,24 +48,12 @@ def main():
                 'epoch':      results['epochs'],
                 'seed':       results['seed'],
                 'lr':         results['lr'],
-                'l2pen':      results['l2pen']
             })
             if first_run:
                 df.to_csv('results/ViT_FT.csv', mode="w", index=False, header=True) # overwrites if file already exists
                 first_run = False
             else:
                 df.to_csv('results/ViT_FT.csv', mode="a", index=False, header=False)
-
-            # plt.figure()
-            # plt.plot(results['epochs'], results['tr']['loss'], '--', color='b', label='tr loss')
-            # plt.plot(results['epochs'], results['tr']['err'], '-', color='b', label='tr err')
-
-            # plt.plot(results['epochs'], results['va']['xent'], '--', color='r', label='va xent')
-            # plt.plot(results['epochs'], results['va']['err'], '-', color='r', label='va err')
-            # plt.title('ViT FT\nlr={},seed={},l2pen={}'.format(lr, seed, l2pen))
-            # plt.legend()
-            # plt.savefig('results/ViT_FT_lr{}_seed{}_l2pen{}.jpg'.format(str(lr)[2:], seed, str(l2pen)[2:]))
-            # plt.close()
 
 
 if __name__ == "__main__":
