@@ -59,7 +59,7 @@ def main():
             class_acc_list.sort(key = lambda x: x[1], reverse = True)
             with open('results/Swin_FT_acc_per_class', 'a') as f:
                 for row in class_acc_list:
-                    f.writelines(f"{row[0]}, {row[1]}\n")
+                    f.writelines("{}: {}\n".format(row[0], row[1]))
 
 if __name__ == "__main__":
     main()
