@@ -55,9 +55,10 @@ def test(model: nn.Module, test_loader):
     balanced_acc = balanced_accuracy_score(all_labels, all_preds)
 
     per_class_accuracy = {
-        label: correct_per_class[label] / total_per_class[label]
+        label: (correct_per_class[label] / total_per_class[label] if total_per_class[label] != 0 else 0)
         for label in total_per_class
-        }
+    }
+
 
 
     return balanced_acc, per_class_accuracy
