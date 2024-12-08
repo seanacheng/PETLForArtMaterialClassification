@@ -21,6 +21,7 @@ def main():
 
     first_run = True
     best_acc = 0
+    acc_results = []
     for lr in lrs:
         for seed in seeds:
             start_time = time.time()
@@ -54,6 +55,11 @@ def main():
                 first_run = False
             else:
                 df.to_csv('results/ViT_ST.csv', mode="a", index=False, header=False)
+
+            acc_results.append(acc_per_class)
+
+    df = pd.DataFrame(acc_results)
+    df.to_csv('results/ViT_ST_acc_per_class.csv', index=False)
 
 
 if __name__ == "__main__":

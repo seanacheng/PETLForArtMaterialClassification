@@ -21,6 +21,7 @@ def main():
 
     first_run = True
     best_acc = 0
+    acc_results = []
     for lr in lrs:
         for seed in seeds:
             start_time = time.time()
@@ -55,11 +56,10 @@ def main():
             else:
                 df.to_csv('results/Swin_FT.csv', mode="a", index=False, header=False)
 
-            class_acc_list = [[material, acc_per_class[material]] for material in acc_per_class]
-            class_acc_list.sort(key = lambda x: x[1], reverse = True)
-            with open('results/Swin_FT_acc_per_class', 'a') as f:
-                for row in class_acc_list:
-                    f.writelines("{}: {}\n".format(row[0], row[1]))
+            acc_results.append(acc_per_class)
+
+    df = pd.DataFrame(acc_results)
+    df.to_csv('results/Swin_FT_acc_per_class.csv', index=False)
 
 if __name__ == "__main__":
     main()

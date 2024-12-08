@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+import pandas as pd
 from sklearn.metrics import balanced_accuracy_score
 
 def test(model: nn.Module, test_loader):
@@ -13,23 +14,7 @@ def test(model: nn.Module, test_loader):
     all_preds = []
     all_labels = []
     
-    materials = [
-        'papier',
-        'zilver',
-        'faience',
-        'porselein',
-        'hout',
-        'brons',
-        'glas (materiaal)',
-        'perkament',
-        'geprepareerd papier',
-        'fotopapier',
-        'ijzer',
-        'Japans papier',
-        'ivoor',
-        'Oosters papier',
-        'eikenhout'
-    ]
+    materials = pd.read_csv('data_annotations/all-hist.csv')["material"].to_list()
 
     total_per_class = {material: 0 for material in materials}
     correct_per_class = {material: 0 for material in materials}
@@ -43,7 +28,8 @@ def test(model: nn.Module, test_loader):
             all_preds.extend(pred_y.cpu().numpy())
             all_labels.extend(y.cpu().numpy())
 
-            for label, pred in zip(y.cpu().numpy(), pred_y.cpu().numpy()):
+            for index, pred in zip(y.cpu().numpy(), pred_y.cpu().numpy()):
+                label = materials[index]
                 if label not in total_per_class:
                     total_per_class[label] = 0
                     correct_per_class[label] = 0
@@ -54,11 +40,12 @@ def test(model: nn.Module, test_loader):
 
     balanced_acc = balanced_accuracy_score(all_labels, all_preds)
 
-    per_class_accuracy = {
-        label: (correct_per_class[label] / total_per_class[label] if total_per_class[label] != 0 else 0)
-        for label in total_per_class
-    }
-
-
+    per_class_accuracy = {}
+    for label in total_per_class:
+        class_acc = 0
+        if total_per_class[label] != 0:
+            class_acc = correct_per_class[label] / total_per_class[label]
+        per_class_accuracy[label] = class_acc
+    per_class_accuracy['balanced accuracy'] = balanced_acc
 
     return balanced_acc, per_class_accuracy
