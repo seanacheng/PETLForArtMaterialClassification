@@ -59,7 +59,7 @@ def main():
             acc_results.append(acc_per_class)
 
     df = pd.DataFrame(acc_results)
-    df.to_csv('results/ViT_ST_acc_per_class.csv', index=False)
+    df.to_csv('results/ViT_FT_acc_per_class.csv', index=False)
 
 
 if __name__ == "__main__":
