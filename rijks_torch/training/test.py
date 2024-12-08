@@ -16,8 +16,8 @@ def test(model: nn.Module, test_loader):
     
     materials = pd.read_csv('data_annotations/all-hist.csv')["material"].to_list()
 
-    total_per_class = {material: 0 for material in materials}
-    correct_per_class = {material: 0 for material in materials}
+    total_per_class = {}
+    correct_per_class = {}
 
     with torch.no_grad():
         for x, y in test_loader:
