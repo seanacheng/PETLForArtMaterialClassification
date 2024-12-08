@@ -35,7 +35,7 @@ def test(model: nn.Module, test_loader):
                     correct_per_class[label] = 0
 
                 total_per_class[label] += 1
-                if label == pred:
+                if index == pred:
                     correct_per_class[label] += 1
 
     balanced_acc = balanced_accuracy_score(all_labels, all_preds)
