@@ -15,13 +15,13 @@ def main():
     train_loader, val_loader, test_loader = RijksDataloader.make_data_loaders(batch_size=128, transform=defs.buildTransform(imnet_norm=True))
 
     lrs = [0.001]
-    # seeds = [17, 381, 596, 1365, 2043]
-    seeds = [17, 596, 2043]
+    seeds = [17, 381, 596, 1365, 2043]
     l2pen = 0.01
-    epochs = 300
+    epochs = 100
 
     first_run = True
     best_acc = 0
+    acc_results = []
     for lr in lrs:
         for seed in seeds:
             start_time = time.time()
@@ -31,7 +31,7 @@ def main():
             trained_model, results = train(pretrained_model, train_loader, val_loader, lr, epochs, seed, l2pen)
 
             # Testing model that performed best on validation set:
-            accuracy, balanced_acc = test(trained_model, test_loader)
+            balanced_acc, acc_per_class = test(trained_model, test_loader)
             end_time = time.time()
             runtime = end_time - start_time
             print("runtime: {}, balanced accuracy: {}".format(runtime, balanced_acc))
@@ -55,6 +55,11 @@ def main():
                 first_run = False
             else:
                 df.to_csv('results/ViT_ST.csv', mode="a", index=False, header=False)
+
+            acc_results.append(acc_per_class)
+
+    df = pd.DataFrame(acc_results)
+    df.to_csv('results/ViT_ST_acc_per_class.csv', index=False)
 
 
 if __name__ == "__main__":
